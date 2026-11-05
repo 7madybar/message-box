@@ -3,676 +3,592 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>VG+ | Visionary Growth - صندوق الرسائل التفاعلي</title>
+  <title>VG+ | Visionary Growth — Direct Dispatch</title>
   
-  <!-- Google Fonts: Outfit & Cairo -->
+  <!-- Modern Editorial & Monospace Fonts: IBM Plex Sans Arabic + Space Grotesk -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&family=Outfit:wght@500;700;800;900&display=swap" rel="stylesheet">
-  
-  <!-- Canvas Confetti for Celebration Effect -->
-  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.2/dist/confetti.browser.min.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 
   <style>
     :root {
-      --bg-dark: #070d14;
-      --card-bg: rgba(13, 25, 38, 0.78);
-      --card-border: rgba(16, 185, 129, 0.18);
-      --card-border-glow: rgba(16, 185, 129, 0.45);
-      --primary-green: #10b981;
-      --primary-green-glow: #059669;
-      --navy-blue: #0f2438;
-      --navy-accent: #1e3a53;
-      --text-white: #f8fafc;
-      --text-muted: #94a3b8;
-      --text-dim: #64748b;
+      --bg: #090c10;
+      --panel: #0d1217;
+      --panel-hover: #121820;
+      --border: rgba(255, 255, 255, 0.08);
+      --border-strong: rgba(255, 255, 255, 0.16);
+      --accent-green: #1e7a56;
+      --accent-green-bright: #26996c;
+      --accent-navy: #162a3b;
+      --text-main: #f0f3f6;
+      --text-muted: #8b949e;
+      --text-dim: #484f58;
+      --font-mono: 'Space Mono', monospace;
+      --font-heading: 'Space Grotesk', 'IBM Plex Sans Arabic', sans-serif;
     }
 
     * {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
-      font-family: 'Cairo', system-ui, -apple-system, sans-serif;
+      font-family: 'IBM Plex Sans Arabic', system-ui, -apple-system, sans-serif;
+      -webkit-font-smoothing: antialiased;
     }
 
     body {
       min-height: 100vh;
-      background-color: var(--bg-dark);
+      background-color: var(--bg);
+      /* Architectural blueprint hairline grid */
       background-image: 
-        linear-gradient(rgba(16, 185, 129, 0.04) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(16, 185, 129, 0.04) 1px, transparent 1px),
-        radial-gradient(ellipse at 50% 0%, rgba(16, 185, 129, 0.15) 0%, transparent 60%),
-        radial-gradient(ellipse at 80% 80%, rgba(15, 36, 56, 0.4) 0%, transparent 60%);
-      background-size: 32px 32px, 32px 32px, 100% 100%, 100% 100%;
-      color: var(--text-white);
+        linear-gradient(rgba(255, 255, 255, 0.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.025) 1px, transparent 1px);
+      background-size: 28px 28px;
+      color: var(--text-main);
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      padding: 24px 16px;
-      overflow-x: hidden;
+      padding: 32px 18px;
       position: relative;
     }
 
-    /* Ambient dynamic glow blobs */
-    .ambient-glow {
-      position: absolute;
-      border-radius: 50%;
-      filter: blur(120px);
-      pointer-events: none;
-      z-index: 0;
-      opacity: 0.35;
-      transition: transform 0.2s ease-out;
-    }
-    .glow-1 {
-      width: 420px;
-      height: 420px;
-      background: radial-gradient(circle, #10b981, transparent);
-      top: -100px;
-      right: 10%;
-    }
-    .glow-2 {
-      width: 380px;
-      height: 380px;
-      background: radial-gradient(circle, #0284c7, transparent);
-      bottom: -60px;
-      left: 10%;
-    }
-
-    /* Main Container */
-    .main-wrapper {
+    /* Outer Technical Framing */
+    .frame-container {
       width: 100%;
-      max-width: 620px;
+      max-width: 660px;
       position: relative;
-      z-index: 2;
+      background: var(--panel);
+      border: 1px solid var(--border);
+      padding: 36px 32px;
     }
 
-    /* Card */
-    .card {
-      background: var(--card-bg);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-      border: 1px solid var(--card-border);
-      border-radius: 28px;
-      padding: 36px 30px;
-      box-shadow: 
-        0 20px 50px rgba(0, 0, 0, 0.6),
-        0 0 40px rgba(16, 185, 129, 0.08),
-        inset 0 1px 0 rgba(255, 255, 255, 0.1);
-      position: relative;
-      overflow: hidden;
-      transition: border-color 0.3s ease;
-    }
-
-    .card::before {
-      content: '';
+    /* Corner Crop Marks [┌ ┐ └ ┘] matching the official logo presentation sheet */
+    .corner-mark {
       position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 3px;
-      background: linear-gradient(90deg, transparent, var(--primary-green), #38bdf8, transparent);
+      width: 14px;
+      height: 14px;
+      pointer-events: none;
+    }
+    .corner-tl { top: -1px; right: -1px; border-top: 2px solid var(--accent-green-bright); border-right: 2px solid var(--accent-green-bright); }
+    .corner-tr { top: -1px; left: -1px; border-top: 2px solid var(--accent-green-bright); border-left: 2px solid var(--accent-green-bright); }
+    .corner-bl { bottom: -1px; right: -1px; border-bottom: 2px solid var(--accent-green-bright); border-right: 2px solid var(--accent-green-bright); }
+    .corner-br { bottom: -1px; left: -1px; border-bottom: 2px solid var(--accent-green-bright); border-left: 2px solid var(--accent-green-bright); }
+
+    /* Top Metadata Bar */
+    .meta-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-bottom: 18px;
+      margin-bottom: 26px;
+      border-bottom: 1px solid var(--border);
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      letter-spacing: 1.5px;
+      color: var(--text-dim);
+      text-transform: uppercase;
+    }
+
+    .meta-status {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      color: var(--accent-green-bright);
+    }
+
+    .pulse-dot {
+      width: 6px;
+      height: 6px;
+      background: var(--accent-green-bright);
+      border-radius: 50%;
+      box-shadow: 0 0 8px var(--accent-green-bright);
     }
 
     /* Brand Header */
-    .brand-header {
+    .header-section {
       display: flex;
-      flex-direction: column;
-      align-items: center;
-      text-align: center;
-      margin-bottom: 28px;
+      align-items: flex-start;
+      gap: 20px;
+      margin-bottom: 30px;
     }
 
-    .logo-container {
-      position: relative;
-      margin-bottom: 14px;
+    .logo-frame {
+      width: 64px;
+      height: 64px;
+      background: #000;
+      border: 1px solid var(--border-strong);
+      padding: 2px;
+      flex-shrink: 0;
     }
 
-    .logo-img {
-      width: 82px;
-      height: 82px;
-      border-radius: 22px;
+    .logo-frame img {
+      width: 100%;
+      height: 100%;
       object-fit: cover;
-      border: 2px solid rgba(16, 185, 129, 0.3);
-      box-shadow: 0 0 25px rgba(16, 185, 129, 0.25);
-      background: #0b1a28;
-      padding: 4px;
-      transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+      display: block;
     }
 
-    .logo-img:hover {
-      transform: scale(1.08) rotate(2deg);
-      border-color: var(--primary-green);
+    .header-text {
+      flex: 1;
     }
 
-    .brand-title {
-      font-family: 'Outfit', 'Cairo', sans-serif;
-      font-size: 2.1rem;
-      font-weight: 900;
-      letter-spacing: 1px;
-      background: linear-gradient(135deg, #ffffff 30%, #a7f3d0 70%, #34d399 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
+    .header-tag {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      color: var(--accent-green-bright);
+      letter-spacing: 2px;
+      text-transform: uppercase;
       margin-bottom: 4px;
     }
 
-    .brand-subtitle {
-      font-family: 'Outfit', sans-serif;
-      font-size: 0.82rem;
-      letter-spacing: 4px;
-      color: #34d399;
+    h1.brand-title {
+      font-family: var(--font-heading);
+      font-size: 1.7rem;
       font-weight: 700;
-      text-transform: uppercase;
-      margin-bottom: 12px;
+      letter-spacing: -0.5px;
+      color: #fff;
+      line-height: 1.2;
+      margin-bottom: 8px;
     }
 
-    .brand-desc {
+    .brand-sub {
       color: var(--text-muted);
-      font-size: 0.95rem;
+      font-size: 0.92rem;
       line-height: 1.6;
-      max-width: 440px;
     }
 
-    /* Section Label */
-    .section-title {
-      font-size: 0.88rem;
-      font-weight: 700;
-      color: #cbd5e1;
-      margin-bottom: 10px;
+    /* Step Section */
+    .step-block {
+      margin-bottom: 26px;
+    }
+
+    .step-header {
       display: flex;
       align-items: center;
       justify-content: space-between;
+      margin-bottom: 12px;
     }
 
-    .section-title span.hint {
-      font-size: 0.75rem;
-      color: var(--primary-green);
-      font-weight: 600;
-    }
-
-    /* Avatar Grid Selection */
-    .avatar-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 10px;
-      margin-bottom: 22px;
-    }
-
-    .avatar-card {
-      background: rgba(15, 36, 56, 0.45);
-      border: 1.5px solid rgba(255, 255, 255, 0.08);
-      border-radius: 16px;
-      padding: 10px 6px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 6px;
-      cursor: pointer;
-      transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
-      position: relative;
-    }
-
-    .avatar-card:hover {
-      background: rgba(16, 185, 129, 0.1);
-      border-color: rgba(16, 185, 129, 0.4);
-      transform: translateY(-3px);
-    }
-
-    .avatar-card.active {
-      background: rgba(16, 185, 129, 0.16);
-      border-color: var(--primary-green);
-      box-shadow: 0 0 16px rgba(16, 185, 129, 0.35);
-      transform: translateY(-2px);
-    }
-
-    .avatar-card.active::after {
-      content: '✓';
-      position: absolute;
-      top: -5px;
-      right: -5px;
-      width: 18px;
-      height: 18px;
-      background: var(--primary-green);
-      color: #070d14;
-      font-size: 11px;
-      font-weight: 900;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .avatar-emoji {
-      font-size: 1.8rem;
-      transition: transform 0.2s;
-    }
-
-    .avatar-card:hover .avatar-emoji {
-      transform: scale(1.15);
-    }
-
-    .avatar-name {
-      font-size: 0.76rem;
-      font-weight: 700;
-      color: #e2e8f0;
-      white-space: nowrap;
-    }
-
-    /* Tag Pills (نوع الرسالة) */
-    .tags-container {
-      display: flex;
-      gap: 8px;
-      overflow-x: auto;
-      padding-bottom: 6px;
-      margin-bottom: 20px;
-      scrollbar-width: none;
-    }
-    .tags-container::-webkit-scrollbar { display: none; }
-
-    .tag-pill {
-      flex-shrink: 0;
-      padding: 6px 14px;
-      background: rgba(255, 255, 255, 0.04);
-      border: 1px solid rgba(255, 255, 255, 0.09);
-      border-radius: 999px;
-      font-size: 0.8rem;
-      font-weight: 600;
+    .step-index {
+      font-family: var(--font-mono);
+      font-size: 0.74rem;
       color: var(--text-muted);
-      cursor: pointer;
-      transition: all 0.2s;
+      letter-spacing: 1px;
     }
 
-    .tag-pill:hover {
-      background: rgba(255, 255, 255, 0.08);
+    .step-title {
+      font-weight: 600;
+      font-size: 0.95rem;
       color: #fff;
     }
 
-    .tag-pill.active {
-      background: rgba(16, 185, 129, 0.18);
-      border-color: var(--primary-green);
-      color: #34d399;
+    /* Identity Selector (Modern Editorial Codename Cards) */
+    .identity-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
     }
 
-    /* Textarea Box */
-    .input-box-wrapper {
+    .id-card {
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid var(--border);
+      padding: 12px 10px;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      transition: all 0.15s ease;
       position: relative;
-      margin-bottom: 20px;
+    }
+
+    .id-card:hover {
+      background: rgba(255, 255, 255, 0.05);
+      border-color: var(--border-strong);
+    }
+
+    .id-card.active {
+      background: rgba(30, 122, 86, 0.12);
+      border-color: var(--accent-green-bright);
+    }
+
+    .id-card.active::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      right: 0;
+      left: 0;
+      height: 2px;
+      background: var(--accent-green-bright);
+    }
+
+    .id-code {
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      color: var(--text-dim);
+      letter-spacing: 1px;
+    }
+
+    .id-card.active .id-code {
+      color: var(--accent-green-bright);
+    }
+
+    .id-label {
+      font-size: 0.86rem;
+      font-weight: 600;
+      color: #fff;
+    }
+
+    /* Classification Pills */
+    .tag-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 7px;
+    }
+
+    .tag-btn {
+      font-family: var(--font-mono);
+      font-size: 0.74rem;
+      padding: 6px 14px;
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+
+    .tag-btn:hover {
+      border-color: var(--text-muted);
+      color: #fff;
+    }
+
+    .tag-btn.active {
+      border-color: var(--accent-green-bright);
+      background: rgba(30, 122, 86, 0.15);
+      color: var(--accent-green-bright);
+      font-weight: 700;
+    }
+
+    /* Message Field */
+    .input-wrapper {
+      position: relative;
     }
 
     textarea {
       width: 100%;
-      height: 150px;
-      background: rgba(7, 13, 20, 0.7);
-      border: 1.5px solid rgba(255, 255, 255, 0.1);
-      border-radius: 18px;
-      padding: 16px 18px;
-      color: #fff;
-      font-size: 1rem;
+      height: 140px;
+      background: #06090d;
+      border: 1px solid var(--border);
+      padding: 14px 16px;
+      color: #f0f3f6;
+      font-size: 0.96rem;
       line-height: 1.7;
       resize: none;
       outline: none;
-      transition: all 0.25s ease;
+      transition: border-color 0.2s;
     }
 
     textarea:focus {
-      border-color: var(--primary-green);
-      background: rgba(7, 13, 20, 0.95);
-      box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.2);
+      border-color: var(--accent-green-bright);
     }
 
     textarea::placeholder {
-      color: #475569;
+      color: var(--text-dim);
+      font-weight: 400;
     }
 
-    .input-meta {
+    .textarea-bottom {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-top: 6px;
-      font-size: 0.8rem;
+      padding-top: 8px;
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
       color: var(--text-dim);
     }
 
-    .char-counter {
-      font-weight: 600;
-      color: var(--text-muted);
-    }
-
-    /* Submit Button */
-    .btn-submit {
+    /* Primary Action Button */
+    .btn-transmit {
       width: 100%;
-      padding: 16px;
-      background: linear-gradient(135deg, #10b981 0%, #059669 50%, #0f766e 100%);
-      color: #ffffff;
-      border: none;
-      border-radius: 16px;
-      font-size: 1.1rem;
-      font-weight: 800;
+      padding: 14px;
+      background: var(--accent-green);
+      border: 1px solid var(--accent-green-bright);
+      color: #fff;
+      font-family: var(--font-mono);
+      font-size: 0.88rem;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
       cursor: pointer;
       display: flex;
       align-items: center;
       justify-content: center;
       gap: 10px;
-      box-shadow: 0 10px 25px -5px rgba(16, 185, 129, 0.45);
-      transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
-      position: relative;
-      overflow: hidden;
+      transition: all 0.18s;
+      margin-top: 8px;
     }
 
-    .btn-submit:hover:not(:disabled) {
-      transform: translateY(-2px);
-      box-shadow: 0 15px 30px -5px rgba(16, 185, 129, 0.65);
-      filter: brightness(1.08);
+    .btn-transmit:hover:not(:disabled) {
+      background: var(--accent-green-bright);
+      box-shadow: 0 4px 20px rgba(30, 122, 86, 0.35);
     }
 
-    .btn-submit:active:not(:disabled) {
-      transform: translateY(0);
-    }
-
-    .btn-submit:disabled {
-      opacity: 0.6;
+    .btn-transmit:disabled {
+      opacity: 0.5;
       cursor: not-allowed;
-      filter: grayscale(0.5);
     }
 
-    .spinner {
-      width: 22px;
-      height: 22px;
-      border: 3px solid rgba(255, 255, 255, 0.3);
-      border-top-color: #ffffff;
-      border-radius: 50%;
-      animation: spin 0.7s linear infinite;
+    /* Success State */
+    .dispatch-success {
       display: none;
-    }
-
-    @keyframes spin {
-      to { transform: rotate(360deg); }
-    }
-
-    .btn-submit.loading .spinner { display: block; }
-    .btn-submit.loading .btn-text { display: none; }
-
-    /* Success Card (Shown after sending) */
-    .success-overlay {
-      display: none;
+      padding: 40px 20px;
       text-align: center;
-      padding: 20px 0;
-      animation: zoomIn 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+      border: 1px solid var(--accent-green-bright);
+      background: rgba(30, 122, 86, 0.06);
     }
 
-    @keyframes zoomIn {
-      from { opacity: 0; transform: scale(0.9); }
-      to { opacity: 1; transform: scale(1); }
-    }
-
-    .success-icon {
-      width: 80px;
-      height: 80px;
-      background: rgba(16, 185, 129, 0.15);
-      border: 2px solid var(--primary-green);
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 38px;
-      margin: 0 auto 18px;
-      box-shadow: 0 0 30px rgba(16, 185, 129, 0.35);
+    .success-code {
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      color: var(--accent-green-bright);
+      letter-spacing: 2px;
+      margin-bottom: 12px;
     }
 
     .success-title {
-      font-size: 1.5rem;
-      font-weight: 800;
-      margin-bottom: 8px;
-      color: #34d399;
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 10px;
     }
 
     .success-desc {
       color: var(--text-muted);
       font-size: 0.95rem;
+      max-width: 440px;
+      margin: 0 auto 24px;
       line-height: 1.6;
-      margin-bottom: 24px;
     }
 
-    .btn-again {
-      padding: 12px 28px;
-      background: rgba(255, 255, 255, 0.08);
-      border: 1px solid rgba(255, 255, 255, 0.15);
-      border-radius: 14px;
-      color: #fff;
-      font-size: 0.95rem;
-      font-weight: 700;
-      cursor: pointer;
-      transition: all 0.2s;
-    }
-
-    .btn-again:hover {
-      background: rgba(16, 185, 129, 0.2);
-      border-color: var(--primary-green);
-    }
-
-    .status-alert {
-      margin-top: 14px;
-      padding: 12px;
-      border-radius: 12px;
-      font-size: 0.9rem;
-      display: none;
-      text-align: center;
-    }
-    .status-alert.error {
-      background: rgba(239, 68, 68, 0.15);
-      border: 1px solid rgba(239, 68, 68, 0.35);
-      color: #f87171;
-      display: block;
-    }
-
-    /* Footer */
-    footer {
-      text-align: center;
-      margin-top: 24px;
+    .btn-reset {
+      font-family: var(--font-mono);
       font-size: 0.8rem;
-      color: #475569;
-      letter-spacing: 0.5px;
+      padding: 10px 22px;
+      background: transparent;
+      border: 1px solid var(--border-strong);
+      color: #fff;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .btn-reset:hover {
+      border-color: #fff;
+    }
+
+    /* Footer Meta */
+    .frame-footer {
+      margin-top: 28px;
+      padding-top: 18px;
+      border-top: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      color: var(--text-dim);
+    }
+
+    @media (max-width: 600px) {
+      .frame-container { padding: 24px 18px; }
+      .identity-grid { grid-template-columns: repeat(2, 1fr); }
+      .header-section { flex-direction: column; gap: 14px; }
     }
   </style>
 </head>
 <body>
 
-  <!-- Ambient light blobs -->
-  <div class="ambient-glow glow-1" id="glow1"></div>
-  <div class="ambient-glow glow-2" id="glow2"></div>
+  <div class="frame-container">
+    <!-- Architectural Corner Marks -->
+    <div class="corner-mark corner-tl"></div>
+    <div class="corner-mark corner-tr"></div>
+    <div class="corner-mark corner-bl"></div>
+    <div class="corner-mark corner-br"></div>
 
-  <div class="main-wrapper">
-    <div class="card">
+    <!-- Top Technical Metadata -->
+    <div class="meta-bar">
+      <span>SYSTEM // VG-DISPATCH-01</span>
+      <div class="meta-status">
+        <span class="pulse-dot"></span>
+        <span>CHANNEL ACTIVE</span>
+      </div>
+      <span>CONFIDENTIALITY: LEVEL_A</span>
+    </div>
 
-      <!-- Active Form View -->
-      <div id="formView">
-        <!-- Brand Header -->
-        <div class="brand-header">
-          <div class="logo-container">
-            <img src="assets/logo.jpg" alt="VG+ Logo" class="logo-img" />
-          </div>
-          <h1 class="brand-title">VG<span style="color: var(--primary-green);">+</span></h1>
-          <div class="brand-subtitle">VISIONARY GROWTH</div>
-          <p class="brand-desc">
-            مساحتك الحرة والسرية لمشاركة أفكارك، اقتراحاتك، أو رسائلك الخاصة مع فريق <strong>VG+</strong>.
+    <!-- Main Dispatch Form -->
+    <div id="dispatchFormView">
+
+      <!-- Header with Official Logo -->
+      <div class="header-section">
+        <div class="logo-frame">
+          <img src="assets/logo.jpg" alt="VG+ Official Brandmark" />
+        </div>
+        <div class="header-text">
+          <div class="header-tag">VISIONARY GROWTH // PLATFORM</div>
+          <h1 class="brand-title">صندوق التواصل المباشر</h1>
+          <p class="brand-sub">
+            قناة سرية ومباشرة لتبادل المقترحات، الأفكار الإستراتيجية، والملاحظات الخاصة مع فريق <strong>VG+</strong>.
           </p>
         </div>
+      </div>
 
-        <form id="messageForm">
-          <!-- 1. Avatar Selector -->
-          <div class="section-title">
-            <span>👤 اختر شخصيتك / الأفاتار:</span>
-            <span class="hint" id="activeAvatarName">🚀 ريادي (Visionary)</span>
+      <form id="messageForm">
+        <!-- 01 Identity Selector -->
+        <div class="step-block">
+          <div class="step-header">
+            <span class="step-title">تحديد صفة الإرسال (Identity)</span>
+            <span class="step-index">01 // IDENTITY</span>
           </div>
 
-          <div class="avatar-grid" id="avatarGrid">
-            <!-- Avatars injected dynamically -->
-          </div>
-
-          <!-- 2. Tag / Category Selector -->
-          <div class="section-title">
-            <span>🏷️ تصنيف الرسالة:</span>
-          </div>
-
-          <div class="tags-container" id="tagsContainer">
-            <div class="tag-pill active" data-tag="💡 فكرة واقتراح">💡 فكرة واقتراح</div>
-            <div class="tag-pill" data-tag="🚀 مشروع ريادي">🚀 مشروع ريادي</div>
-            <div class="tag-pill" data-tag="👏 شكر وتقدير">👏 شكر وتقدير</div>
-            <div class="tag-pill" data-tag="🔒 سرية خاصة">🔒 سرية خاصة</div>
-            <div class="tag-pill" data-tag="❓ استفسار">❓ استفسار</div>
-          </div>
-
-          <!-- 3. Message Input -->
-          <div class="section-title">
-            <span>✍️ رسالتك:</span>
-          </div>
-
-          <div class="input-box-wrapper">
-            <textarea 
-              id="messageInput" 
-              maxlength="1000" 
-              placeholder="اكتب رسالتك هنا... (رسالتك سرية ومجهولة وتصل مباشرة لفريق VG+)" 
-              required
-            ></textarea>
-            <div class="input-meta">
-              <span>🔒 تشفير كامل وسرية تامة</span>
-              <div class="char-counter"><span id="charCount">0</span> / 1000</div>
+          <div class="identity-grid" id="identityGrid">
+            <div class="id-card active" data-id="ALPHA" data-label="ريادي أعمل في مشروع">
+              <span class="id-code">ID-01 // ALPHA</span>
+              <span class="id-label">ريادي أعمال</span>
+            </div>
+            <div class="id-card" data-id="NEXUS" data-label="مبتكر / تقني">
+              <span class="id-code">ID-02 // NEXUS</span>
+              <span class="id-label">مبتكر وتقني</span>
+            </div>
+            <div class="id-card" data-id="ARCHITECT" data-label="مستشار / مخطط">
+              <span class="id-code">ID-03 // ARCHITECT</span>
+              <span class="id-label">مستشار وتطوير</span>
+            </div>
+            <div class="id-card" data-id="VENTURE" data-label="شريك استثماري">
+              <span class="id-code">ID-04 // VENTURE</span>
+              <span class="id-label">شريك استثماري</span>
+            </div>
+            <div class="id-card" data-id="CREATIVE" data-label="مصمم / صانع محتوى">
+              <span class="id-code">ID-05 // CREATIVE</span>
+              <span class="id-label">مبدع ومصمم</span>
+            </div>
+            <div class="id-card" data-id="ANONYMOUS" data-label="مصدر مجهول تماماً">
+              <span class="id-code">ID-06 // SPECTRE</span>
+              <span class="id-label">مجهول الهوية</span>
             </div>
           </div>
+        </div>
 
-          <!-- Submit Button -->
-          <button type="submit" id="submitBtn" class="btn-submit">
-            <span class="btn-text">إرسال الرسالة إلى VG+ 🚀</span>
-            <div class="spinner"></div>
-          </button>
+        <!-- 02 Topic Classification -->
+        <div class="step-block">
+          <div class="step-header">
+            <span class="step-title">طبيعة الرسالة (Classification)</span>
+            <span class="step-index">02 // TOPIC</span>
+          </div>
 
-          <div id="statusAlert" class="status-alert"></div>
-        </form>
-      </div>
+          <div class="tag-grid" id="tagGrid">
+            <button type="button" class="tag-btn active" data-tag="PROP // مقترح تطوير">مقترح تطوير</button>
+            <button type="button" class="tag-btn" data-tag="STRAT // فكرة استراتيجية">فكرة استراتيجية</button>
+            <button type="button" class="tag-btn" data-tag="COLLAB // طلب تعاون">طلب تعاون</button>
+            <button type="button" class="tag-btn" data-tag="CONFIDENTIAL // رسالة خاصة">سرية خاصة</button>
+            <button type="button" class="tag-btn" data-tag="FEEDBACK // ملاحظة نقدية">ملاحظة نقدية</button>
+          </div>
+        </div>
 
-      <!-- Success View (After Sending) -->
-      <div id="successView" class="success-overlay">
-        <div class="success-icon">✨</div>
-        <h2 class="success-title">وصلت رسالتك بنجاح!</h2>
-        <p class="success-desc">
-          شكرًا لمشاركتك القيّمة. رسالتك الآن في أيدٍ أمينة مع فريق <strong>VG+ | Visionary Growth</strong> وستُقرأ بعناية فائقة.
-        </p>
-        <button type="button" class="btn-again" onclick="resetForm()">
-          <span>✍️ إرسال رسالة أخرى</span>
+        <!-- 03 Message Input -->
+        <div class="step-block">
+          <div class="step-header">
+            <span class="step-title">محتوى الإرسال (Dispatch Content)</span>
+            <span class="step-index">03 // MESSAGE</span>
+          </div>
+
+          <div class="input-wrapper">
+            <textarea 
+              id="messageInput" 
+              maxlength="1200" 
+              placeholder="اكتب رسالتك هنا بكل دقة وشفافية... يتم استقبال وتحليل الإرسال مباشرة من قيادة VG+."
+              required
+            ></textarea>
+            <div class="textarea-bottom">
+              <span>SECURITY: END-TO-END CONFIDENTIAL</span>
+              <span>CHARS: <span id="charCount">000</span> / 1200</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Transmit Action -->
+        <button type="submit" id="submitBtn" class="btn-transmit">
+          <span>[ إرسال الإفادة إلى VG+ ➔ ]</span>
         </button>
-      </div>
+      </form>
 
     </div>
 
-    <footer>
-      VG+ • Visionary Growth Platform • Confidential Messaging System
-    </footer>
+    <!-- Success View -->
+    <div id="dispatchSuccessView" class="dispatch-success">
+      <div class="success-code">STATUS // 200 OK — DISPATCH TRANSMITTED</div>
+      <h2 class="success-title">تم استلام إرسالك بنجاح</h2>
+      <p class="success-desc">
+        تم تسجيل رسالتك بنجاح في سجل الإرسال الداخلي لمنظومة <strong>VG+ | Visionary Growth</strong> وستتم مراجعتها بأعلى درجات الاهتمام والسرية.
+      </p>
+      <button type="button" class="btn-reset" onclick="resetForm()">[ إرسال إفادة جديدة ]</button>
+    </div>
+
+    <!-- Technical Footer -->
+    <div class="frame-footer">
+      <span>VG+ ARCHITECTURE • BUILD 2026.11</span>
+      <span>ALL RIGHTS RESERVED // VISIONARY GROWTH</span>
+    </div>
+
   </div>
 
   <script>
-    // Avatars Data
-    const AVATARS = [
-      { id: 'visionary', emoji: '🚀', name: 'ريادي (Visionary)' },
-      { id: 'innovator', emoji: '⚡', name: 'مبتكر (Innovator)' },
-      { id: 'thinker', emoji: '💡', name: 'مفكر (Thinker)' },
-      { id: 'shadow', emoji: '🕶️', name: 'خفي (Shadow)' },
-      { id: 'leader', emoji: '👑', name: 'قائد (Leader)' },
-      { id: 'strategist', emoji: '🎯', name: 'استراتيجي (Strategist)' },
-      { id: 'creator', emoji: '💎', name: 'مبدع (Creator)' },
-      { id: 'cyber', emoji: '🤖', name: 'سايبر (Cyber)' }
-    ];
+    let selectedIdentity = {
+      code: 'ID-01 // ALPHA',
+      label: 'ريادي أعمال'
+    };
+    let selectedTag = 'PROP // مقترح تطوير';
 
-    let selectedAvatar = AVATARS[0];
-    let selectedTag = '💡 فكرة واقتراح';
-
-    // Interactive Audio Synthesizer (Zero external dependencies)
-    const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-    function playBeep(freq = 600, duration = 0.08, type = 'sine') {
-      try {
-        if (audioCtx.state === 'suspended') audioCtx.resume();
-        const osc = audioCtx.createOscillator();
-        const gain = audioCtx.createGain();
-        osc.type = type;
-        osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
-        gain.gain.setValueAtTime(0.08, audioCtx.currentTime);
-        gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + duration);
-        osc.connect(gain);
-        gain.connect(audioCtx.destination);
-        osc.start();
-        osc.stop(audioCtx.currentTime + duration);
-      } catch (e) {}
-    }
-
-    function playSuccessChime() {
-      try {
-        [523.25, 659.25, 783.99, 1046.50].forEach((freq, idx) => {
-          setTimeout(() => playBeep(freq, 0.25, 'triangle'), idx * 90);
-        });
-      } catch (e) {}
-    }
-
-    // Render Avatars Grid
-    const avatarGrid = document.getElementById('avatarGrid');
-    const activeAvatarName = document.getElementById('activeAvatarName');
-
-    AVATARS.forEach((av, index) => {
-      const card = document.createElement('div');
-      card.className = `avatar-card ${index === 0 ? 'active' : ''}`;
-      card.innerHTML = `
-        <span class="avatar-emoji">${av.emoji}</span>
-        <span class="avatar-name">${av.name.split(' ')[0]}</span>
-      `;
-      card.onclick = () => {
-        document.querySelectorAll('.avatar-card').forEach(c => c.classList.remove('active'));
+    // Identity Selection
+    const idCards = document.querySelectorAll('.id-card');
+    idCards.forEach(card => {
+      card.addEventListener('click', () => {
+        idCards.forEach(c => c.classList.remove('active'));
         card.classList.add('active');
-        selectedAvatar = av;
-        activeAvatarName.textContent = `${av.emoji} ${av.name}`;
-        playBeep(450 + (index * 50), 0.05);
-      };
-      avatarGrid.appendChild(card);
+        selectedIdentity = {
+          code: card.querySelector('.id-code').textContent,
+          label: card.querySelector('.id-label').textContent
+        };
+      });
     });
 
     // Tag Selection
-    const tagPills = document.querySelectorAll('.tag-pill');
-    tagPills.forEach(pill => {
-      pill.onclick = () => {
-        tagPills.forEach(p => p.classList.remove('active'));
-        pill.classList.add('active');
-        selectedTag = pill.getAttribute('data-tag');
-        playBeep(520, 0.05);
-      };
+    const tagBtns = document.querySelectorAll('.tag-btn');
+    tagBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        tagBtns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        selectedTag = btn.getAttribute('data-tag');
+      });
     });
 
     // Character Counter
     const messageInput = document.getElementById('messageInput');
     const charCount = document.getElementById('charCount');
     messageInput.addEventListener('input', () => {
-      charCount.textContent = messageInput.value.length;
+      const len = messageInput.value.length;
+      charCount.textContent = len.toString().padStart(3, '0');
     });
 
-    // Form submission
+    // Form Submission
     const form = document.getElementById('messageForm');
     const submitBtn = document.getElementById('submitBtn');
-    const formView = document.getElementById('formView');
-    const successView = document.getElementById('successView');
-    const statusAlert = document.getElementById('statusAlert');
+    const formView = document.getElementById('dispatchFormView');
+    const successView = document.getElementById('dispatchSuccessView');
 
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
-
       const message = messageInput.value.trim();
-      if (!message) {
-        showError('يرجى كتابة نص الرسالة أولاً!');
-        return;
-      }
+      if (!message) return;
 
-      submitBtn.classList.add('loading');
       submitBtn.disabled = true;
-      statusAlert.style.display = 'none';
+      submitBtn.innerText = '[ جاري الإرسال والتشفير... ]';
 
       try {
         const response = await fetch('/api/send', {
@@ -680,60 +596,35 @@
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
             message,
-            avatar: selectedAvatar,
+            avatar: {
+              emoji: '◆',
+              name: `${selectedIdentity.code} (${selectedIdentity.label})`
+            },
             tag: selectedTag
           })
         });
 
         const data = await response.json();
-
         if (response.ok && data.success) {
-          // Play celebration chime
-          playSuccessChime();
-
-          // Confetti blast!
-          confetti({
-            particleCount: 80,
-            spread: 70,
-            origin: { y: 0.6 },
-            colors: ['#10b981', '#34d399', '#38bdf8', '#ffffff']
-          });
-
-          // Show success view
           formView.style.display = 'none';
           successView.style.display = 'block';
         } else {
-          showError(data.error || 'حدث خطأ أثناء إرسال الرسالة.');
+          alert(data.error || 'فشل في إرسال الرسالة.');
         }
       } catch (err) {
-        showError('تعذر الاتصال بالخادم. يرجى التأكد من تشغيل السيرفر.');
+        alert('تعذر الاتصال بالخادم.');
       } finally {
-        submitBtn.classList.remove('loading');
         submitBtn.disabled = false;
+        submitBtn.innerText = '[ إرسال الإفادة إلى VG+ ➔ ]';
       }
     });
 
-    function showError(msg) {
-      statusAlert.textContent = msg;
-      statusAlert.className = 'status-alert error';
-    }
-
     function resetForm() {
       messageInput.value = '';
-      charCount.textContent = '0';
+      charCount.textContent = '000';
       successView.style.display = 'none';
       formView.style.display = 'block';
     }
-
-    // Interactive ambient mouse movement
-    document.addEventListener('mousemove', (e) => {
-      const x = (e.clientX / window.innerWidth) - 0.5;
-      const y = (e.clientY / window.innerHeight) - 0.5;
-      const glow1 = document.getElementById('glow1');
-      const glow2 = document.getElementById('glow2');
-      if (glow1) glow1.style.transform = `translate(${x * 30}px, ${y * 30}px)`;
-      if (glow2) glow2.style.transform = `translate(${-x * 30}px, ${-y * 30}px)`;
-    });
   </script>
 </body>
 </html>

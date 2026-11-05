@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>VG+ | Visionary Growth — Direct Dispatch</title>
+  
+  <!-- Modern Editorial & Monospace Fonts: IBM Plex Sans Arabic + Space Grotesk -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg: #090c10;
+      --panel: #0d1217;
+      --panel-hover: #121820;
+      --border: rgba(255, 255, 255, 0.08);
+      --border-strong: rgba(255, 255, 255, 0.16);
+      --accent-green: #1e7a56;
+      --accent-green-bright: #26996c;
+      --accent-navy: #162a3b;
+      --text-main: #f0f3f6;
+      --text-muted: #8b949e;
+      --text-dim: #484f58;
+      --font-mono: 'Space Mono', monospace;
+      --font-heading: 'Space Grotesk', 'IBM Plex Sans Arabic', sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'IBM Plex Sans Arabic', system-ui, -apple-system, sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    body {
+      min-height: 100vh;
+      background-color: var(--bg);
+      /* Architectural blueprint hairline grid */
+      background-image: 
+        linear-gradient(rgba(255, 255, 255, 0.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.025) 1px, transparent 1px);
+      background-size: 28px 28px;
+      color: var(--text-main);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 32px 18px;
+      position: relative;
+    }
+
+    /* Outer Technical Framing */
+    .frame-container {
+      width: 100%;
+      max-width: 660px;
+      position: relative;
+      background: var(--panel);
+      border: 1px solid var(--border);
+      padding: 36px 32px;
+    }
+
+    /* Corner Crop Marks [┌ ┐ └ ┘] matching the official logo presentation sheet */
+    .corner-mark {
+      position: absolute;
+      width: 14px;
+      height: 14px;
+      pointer-events: none;
+    }
+    .corner-tl { top: -1px; right: -1px; border-top: 2px solid var(--accent-green-bright); border-right: 2px solid var(--accent-green-bright); }
+    .corner-tr { top: -1px; left: -1px; border-top: 2px solid var(--accent-green-bright); border-left: 2px solid var(--accent-green-bright); }
+    .corner-bl { bottom: -1px; right: -1px; border-bottom: 2px solid var(--accent-green-bright); border-right: 2px solid var(--accent-green-bright); }
+    .corner-br { bottom: -1px; left: -1px; border-bottom: 2px solid var(--accent-green-bright); border-left: 2px solid var(--accent-green-bright); }
+
+    /* Top Metadata Bar */
+    .meta-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-bottom: 18px;
+      margin-bottom: 26px;
+      border-bottom: 1px solid var(--border);
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      letter-spacing: 1.5px;
+      color: var(--text-dim);
+      text-transform: uppercase;
+    }
+
+    .meta-status {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      color: var(--accent-green-bright);
+    }
+
+    .pulse-dot {
+      width: 6px;
+      height: 6px;
+      background: var(--accent-green-bright);
+      border-radius: 50%;
+      box-shadow: 0 0 8px var(--accent-green-bright);
+    }
+
+    /* Brand Header */
+    .header-section {
+      display: flex;
+      align-items: flex-start;
+      gap: 20px;
+      margin-bottom: 30px;
+    }
+
+    .logo-frame {
+      width: 64px;
+      height: 64px;
+      background: #000;
+      border: 1px solid var(--border-strong);
+      padding: 2px;
+      flex-shrink: 0;
+    }
+
+    .logo-frame img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .header-text {
+      flex: 1;
+    }
+
+    .header-tag {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      color: var(--accent-green-bright);
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 4px;
+    }
+
+    h1.brand-title {
+      font-family: var(--font-heading);
+      font-size: 1.7rem;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+      color: #fff;
+      line-height: 1.2;
+      margin-bottom: 8px;
+    }
+
+    .brand-sub {
+      color: var(--text-muted);
+      font-size: 0.92rem;
+      line-height: 1.6;
+    }
+
+    /* Step Section */
+    .step-block {
+      margin-bottom: 26px;
+    }
+
+    .step-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 12px;
+    }
+
+    .step-index {
+      font-family: var(--font-mono);
+      font-size: 0.74rem;
+      color: var(--text-muted);
+      letter-spacing: 1px;
+    }
+
+    .step-title {
+      font-weight: 600;
+      font-size: 0.95rem;
+      color: #fff;
+    }
+
+    /* Identity Selector (Modern Editorial Codename Cards) */
+    .identity-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+    }
+
+    .id-card {
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid var(--border);
+      padding: 12px 10px;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      transition: all 0.15s ease;
+      position: relative;
+    }
+
+    .id-card:hover {
+      background: rgba(255, 255, 255, 0.05);
+      border-color: var(--border-strong);
+    }
+
+    .id-card.active {
+      background: rgba(30, 122, 86, 0.12);
+      border-color: var(--accent-green-bright);
+    }
+
+    .id-card.active::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      right: 0;
+      left: 0;
+      height: 2px;
+      background: var(--accent-green-bright);
+    }
+
+    .id-code {
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      color: var(--text-dim);
+      letter-spacing: 1px;
+    }
+
+    .id-card.active .id-code {
+      color: var(--accent-green-bright);
+    }
+
+    .id-label {
+      font-size: 0.86rem;
+      font-weight: 600;
+      color: #fff;
+    }
+
+    /* Classification Pills */
+    .tag-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 7px;
+    }
+
+    .tag-btn {
+      font-family: var(--font-mono);
+      font-size: 0.74rem;
+      padding: 6px 14px;
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+
+    .tag-btn:hover {
+      border-color: var(--text-muted);
+      color: #fff;
+    }
+
+    .tag-btn.active {
+      border-color: var(--accent-green-bright);
+      background: rgba(30, 122, 86, 0.15);
+      color: var(--accent-green-bright);
+      font-weight: 700;
+    }
+
+    /* Message Field */
+    .input-wrapper {
+      position: relative;
+    }
+
+    textarea {
+      width: 100%;
+      height: 140px;
+      background: #06090d;
+      border: 1px solid var(--border);
+      padding: 14px 16px;
+      color: #f0f3f6;
+      font-size: 0.96rem;
+      line-height: 1.7;
+      resize: none;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    textarea:focus {
+      border-color: var(--accent-green-bright);
+    }
+
+    textarea::placeholder {
+      color: var(--text-dim);
+      font-weight: 400;
+    }
+
+    .textarea-bottom {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 8px;
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      color: var(--text-dim);
+    }
+
+    /* Primary Action Button */
+    .btn-transmit {
+      width: 100%;
+      padding: 14px;
+      background: var(--accent-green);
+      border: 1px solid var(--accent-green-bright);
+      color: #fff;
+      font-family: var(--font-mono);
+      font-size: 0.88rem;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      transition: all 0.18s;
+      margin-top: 8px;
+    }
+
+    .btn-transmit:hover:not(:disabled) {
+      background: var(--accent-green-bright);
+      box-shadow: 0 4px 20px rgba(30, 122, 86, 0.35);
+    }
+
+    .btn-transmit:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    /* Success State */
+    .dispatch-success {
+      display: none;
+      padding: 40px 20px;
+      text-align: center;
+      border: 1px solid var(--accent-green-bright);
+      background: rgba(30, 122, 86, 0.06);
+    }
+
+    .success-code {
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      color: var(--accent-green-bright);
+      letter-spacing: 2px;
+      margin-bottom: 12px;
+    }
+
+    .success-title {
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 10px;
+    }
+
+    .success-desc {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      max-width: 440px;
+      margin: 0 auto 24px;
+      line-height: 1.6;
+    }
+
+    .btn-reset {
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      padding: 10px 22px;
+      background: transparent;
+      border: 1px solid var(--border-strong);
+      color: #fff;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .btn-reset:hover {
+      border-color: #fff;
+    }
+
+    /* Footer Meta */
+    .frame-footer {
+      margin-top: 28px;
+      padding-top: 18px;
+      border-top: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      color: var(--text-dim);
+    }
+
+    @media (max-width: 600px) {
+      .frame-container { padding: 24px 18px; }
+      .identity-grid { grid-template-columns: repeat(2, 1fr); }
+      .header-section { flex-direction: column; gap: 14px; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="frame-container">
+    <!-- Architectural Corner Marks -->
+    <div class="corner-mark corner-tl"></div>
+    <div class="corner-mark corner-tr"></div>
+    <div class="corner-mark corner-bl"></div>
+    <div class="corner-mark corner-br"></div>
+
+    <!-- Top Technical Metadata -->
+    <div class="meta-bar">
+      <span>SYSTEM // VG-DISPATCH-01</span>
+      <div class="meta-status">
+        <span class="pulse-dot"></span>
+        <span>CHANNEL ACTIVE</span>
+      </div>
+      <span>CONFIDENTIALITY: LEVEL_A</span>
+    </div>
+
+    <!-- Main Dispatch Form -->
+    <div id="dispatchFormView">
+
+      <!-- Header with Official Logo -->
+      <div class="header-section">
+        <div class="logo-frame">
+          <img src="assets/logo.jpg" alt="VG+ Official Brandmark" />
+        </div>
+        <div class="header-text">
+          <div class="header-tag">VISIONARY GROWTH // PLATFORM</div>
+          <h1 class="brand-title">صندوق التواصل المباشر</h1>
+          <p class="brand-sub">
+            قناة سرية ومباشرة لتبادل المقترحات، الأفكار الإستراتيجية، والملاحظات الخاصة مع فريق <strong>VG+</strong>.
+          </p>
+        </div>
+      </div>
+
+      <form id="messageForm">
+        <!-- 01 Identity Selector -->
+        <div class="step-block">
+          <div class="step-header">
+            <span class="step-title">تحديد صفة الإرسال (Identity)</span>
+            <span class="step-index">01 // IDENTITY</span>
+          </div>
+
+          <div class="identity-grid" id="identityGrid">
+            <div class="id-card active" data-id="ALPHA" data-label="ريادي أعمل في مشروع">
+              <span class="id-code">ID-01 // ALPHA</span>
+              <span class="id-label">ريادي أعمال</span>
+            </div>
+            <div class="id-card" data-id="NEXUS" data-label="مبتكر / تقني">
+              <span class="id-code">ID-02 // NEXUS</span>
+              <span class="id-label">مبتكر وتقني</span>
+            </div>
+            <div class="id-card" data-id="ARCHITECT" data-label="مستشار / مخطط">
+              <span class="id-code">ID-03 // ARCHITECT</span>
+              <span class="id-label">مستشار وتطوير</span>
+            </div>
+            <div class="id-card" data-id="VENTURE" data-label="شريك استثماري">
+              <span class="id-code">ID-04 // VENTURE</span>
+              <span class="id-label">شريك استثماري</span>
+            </div>
+            <div class="id-card" data-id="CREATIVE" data-label="مصمم / صانع محتوى">
+              <span class="id-code">ID-05 // CREATIVE</span>
+              <span class="id-label">مبدع ومصمم</span>
+            </div>
+            <div class="id-card" data-id="ANONYMOUS" data-label="مصدر مجهول تماماً">
+              <span class="id-code">ID-06 // SPECTRE</span>
+              <span class="id-label">مجهول الهوية</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 02 Topic Classification -->
+        <div class="step-block">
+          <div class="step-header">
+            <span class="step-title">طبيعة الرسالة (Classification)</span>
+            <span class="step-index">02 // TOPIC</span>
+          </div>
+
+          <div class="tag-grid" id="tagGrid">
+            <button type="button" class="tag-btn active" data-tag="PROP // مقترح تطوير">مقترح تطوير</button>
+            <button type="button" class="tag-btn" data-tag="STRAT // فكرة استراتيجية">فكرة استراتيجية</button>
+            <button type="button" class="tag-btn" data-tag="COLLAB // طلب تعاون">طلب تعاون</button>
+            <button type="button" class="tag-btn" data-tag="CONFIDENTIAL // رسالة خاصة">سرية خاصة</button>
+            <button type="button" class="tag-btn" data-tag="FEEDBACK // ملاحظة نقدية">ملاحظة نقدية</button>
+          </div>
+        </div>
+
+        <!-- 03 Message Input -->
+        <div class="step-block">
+          <div class="step-header">
+            <span class="step-title">محتوى الإرسال (Dispatch Content)</span>
+            <span class="step-index">03 // MESSAGE</span>
+          </div>
+
+          <div class="input-wrapper">
+            <textarea 
+              id="messageInput" 
+              maxlength="1200" 
+              placeholder="اكتب رسالتك هنا بكل دقة وشفافية... يتم استقبال وتحليل الإرسال مباشرة من قيادة VG+."
+              required
+            ></textarea>
+            <div class="textarea-bottom">
+              <span>SECURITY: END-TO-END CONFIDENTIAL</span>
+              <span>CHARS: <span id="charCount">000</span> / 1200</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Transmit Action -->
+        <button type="submit" id="submitBtn" class="btn-transmit">
+          <span>[ إرسال الإفادة إلى VG+ ➔ ]</span>
+        </button>
+      </form>
+
+    </div>
+
+    <!-- Success View -->
+    <div id="dispatchSuccessView" class="dispatch-success">
+      <div class="success-code">STATUS // 200 OK — DISPATCH TRANSMITTED</div>
+      <h2 class="success-title">تم استلام إرسالك بنجاح</h2>
+      <p class="success-desc">
+        تم تسجيل رسالتك بنجاح في سجل الإرسال الداخلي لمنظومة <strong>VG+ | Visionary Growth</strong> وستتم مراجعتها بأعلى درجات الاهتمام والسرية.
+      </p>
+      <button type="button" class="btn-reset" onclick="resetForm()">[ إرسال إفادة جديدة ]</button>
+    </div>
+
+    <!-- Technical Footer -->
+    <div class="frame-footer">
+      <span>VG+ ARCHITECTURE • BUILD 2026.11</span>
+      <span>ALL RIGHTS RESERVED // VISIONARY GROWTH</span>
+    </div>
+
+  </div>
+
+  <script>
+    let selectedIdentity = {
+      code: 'ID-01 // ALPHA',
+      label: 'ريادي أعمال'
+    };
+    let selectedTag = 'PROP // مقترح تطوير';
+
+    // Identity Selection
+    const idCards = document.querySelectorAll('.id-card');
+    idCards.forEach(card => {
+      card.addEventListener('click', () => {
+        idCards.forEach(c => c.classList.remove('active'));
+        card.classList.add('active');
+        selectedIdentity = {
+          code: card.querySelector('.id-code').textContent,
+          label: card.querySelector('.id-label').textContent
+        };
+      });
+    });
+
+    // Tag Selection
+    const tagBtns = document.querySelectorAll('.tag-btn');
+    tagBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        tagBtns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        selectedTag = btn.getAttribute('data-tag');
+      });
+    });
+
+    // Character Counter
+    const messageInput = document.getElementById('messageInput');
+    const charCount = document.getElementById('charCount');
+    messageInput.addEventListener('input', () => {
+      const len = messageInput.value.length;
+      charCount.textContent = len.toString().padStart(3, '0');
+    });
+
+    // Form Submission
+    const form = document.getElementById('messageForm');
+    const submitBtn = document.getElementById('submitBtn');
+    const formView = document.getElementById('dispatchFormView');
+    const successView = document.getElementById('dispatchSuccessView');
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const message = messageInput.value.trim();
+      if (!message) return;
+
+      submitBtn.disabled = true;
+      submitBtn.innerText = '[ جاري الإرسال والتشفير... ]';
+
+      try {
+        const response = await fetch('/api/send', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            message,
+            avatar: {
+              emoji: '◆',
+              name: `${selectedIdentity.code} (${selectedIdentity.label})`
+            },
+            tag: selectedTag
+          })
+        });
+
+        const data = await response.json();
+        if (response.ok && data.success) {
+          formView.style.display = 'none';
+          successView.style.display = 'block';
+        } else {
+          alert(data.error || 'فشل في إرسال الرسالة.');
+        }
+      } catch (err) {
+        alert('تعذر الاتصال بالخادم.');
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.innerText = '[ إرسال الإفادة إلى VG+ ➔ ]';
+      }
+    });
+
+    function resetForm() {
+      messageInput.value = '';
+      charCount.textContent = '000';
+      successView.style.display = 'none';
+      formView.style.display = 'block';
+    }
+  </script>
+</body>
+</html>
