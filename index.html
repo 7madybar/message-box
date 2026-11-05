@@ -179,23 +179,23 @@
       color: #fff;
     }
 
-    /* 3D Persona Avatars Grid */
+    /* 4 Committees Grid (اللجان الأربعة والزوار) */
     .persona-grid {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: repeat(4, 1fr);
       gap: 10px;
     }
 
     .persona-card {
       background: rgba(255, 255, 255, 0.02);
       border: 1px solid var(--border);
-      padding: 14px 10px;
+      padding: 16px 8px;
       cursor: pointer;
       display: flex;
       flex-direction: column;
       align-items: center;
       text-align: center;
-      gap: 8px;
+      gap: 10px;
       transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
       position: relative;
     }
@@ -207,9 +207,9 @@
     }
 
     .persona-card.active {
-      background: rgba(30, 122, 86, 0.12);
+      background: rgba(30, 122, 86, 0.14);
       border-color: var(--accent-green-bright);
-      box-shadow: 0 4px 16px rgba(30, 122, 86, 0.15);
+      box-shadow: 0 4px 16px rgba(30, 122, 86, 0.2);
     }
 
     .persona-card.active::before {
@@ -223,25 +223,25 @@
     }
 
     .avatar-3d-img {
-      width: 58px;
-      height: 58px;
+      width: 60px;
+      height: 60px;
       object-fit: contain;
-      filter: drop-shadow(0 6px 10px rgba(0, 0, 0, 0.4));
+      filter: drop-shadow(0 6px 10px rgba(0, 0, 0, 0.45));
       transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
     }
 
     .persona-card:hover .avatar-3d-img {
-      transform: scale(1.1) translateY(-2px);
+      transform: scale(1.12) translateY(-2px);
     }
 
     .persona-card.active .avatar-3d-img {
-      transform: scale(1.08);
+      transform: scale(1.1);
     }
 
     .persona-meta {
       display: flex;
       flex-direction: column;
-      gap: 2px;
+      gap: 3px;
       width: 100%;
     }
 
@@ -252,7 +252,7 @@
     }
 
     .persona-trait {
-      font-size: 0.72rem;
+      font-size: 0.7rem;
       color: var(--text-muted);
       line-height: 1.3;
     }
@@ -328,15 +328,14 @@
     /* Primary Action Button */
     .btn-transmit {
       width: 100%;
-      padding: 14px;
+      padding: 15px;
       background: var(--accent-green);
       border: 1px solid var(--accent-green-bright);
       color: #fff;
       font-family: var(--font-mono);
-      font-size: 0.88rem;
+      font-size: 0.9rem;
       font-weight: 700;
       letter-spacing: 1.5px;
-      text-transform: uppercase;
       cursor: pointer;
       display: flex;
       align-items: center;
@@ -366,8 +365,8 @@
     }
 
     .success-badge {
-      width: 72px;
-      height: 72px;
+      width: 76px;
+      height: 76px;
       margin: 0 auto 16px;
     }
     .success-badge img {
@@ -469,108 +468,90 @@
       </div>
 
       <form id="messageForm">
-        <!-- 01 3D Persona Selector -->
+        <!-- 01 Committees & Personas (الـ 4 فئات النمطية) -->
         <div class="step-block">
           <div class="step-header">
-            <span class="step-title">اختر شخصيتك النمطية (3D Persona):</span>
-            <span class="step-index">01 // PERSONA</span>
+            <span class="step-title">اختر صفتك أو لجنتك:</span>
+            <span class="step-index">01 // الفئة</span>
           </div>
 
           <div class="persona-grid" id="personaGrid">
-            <!-- 1. The Pioneer -->
-            <div class="persona-card active" data-img="assets/avatars/pioneer.png" data-name="الرائد (The Pioneer)" data-trait="طموح • رؤية استكشافية">
-              <img src="assets/avatars/pioneer.png" alt="The Pioneer" class="avatar-3d-img" />
+            <!-- 1. اللجنة التقنية -->
+            <div class="persona-card active" data-img="assets/avatars/cyber.png" data-name="اللجنة التقنية" data-trait="برمجة ودعم فني">
+              <img src="assets/avatars/cyber.png" alt="اللجنة التقنية" class="avatar-3d-img" />
               <div class="persona-meta">
-                <span class="persona-name">الرائد</span>
-                <span class="persona-trait">طموح واستكشاف</span>
+                <span class="persona-name">اللجنة التقنية</span>
+                <span class="persona-trait">برمجة ودعم فني</span>
               </div>
             </div>
 
-            <!-- 2. The Cyber Tech -->
-            <div class="persona-card" data-img="assets/avatars/cyber.png" data-name="التقني (The Cyber Tech)" data-trait="كود • حلول ذكية">
-              <img src="assets/avatars/cyber.png" alt="The Cyber Tech" class="avatar-3d-img" />
+            <!-- 2. لجنة الإعلام -->
+            <div class="persona-card" data-img="assets/avatars/creative.png" data-name="لجنة الإعلام" data-trait="محتوى وتصميم">
+              <img src="assets/avatars/creative.png" alt="لجنة الإعلام" class="avatar-3d-img" />
               <div class="persona-meta">
-                <span class="persona-name">التقني</span>
-                <span class="persona-trait">كود وحلول تقنية</span>
+                <span class="persona-name">لجنة الإعلام</span>
+                <span class="persona-trait">محتوى وتصميم ونشر</span>
               </div>
             </div>
 
-            <!-- 3. The Mastermind -->
-            <div class="persona-card" data-img="assets/avatars/mastermind.png" data-name="المفكر (The Mastermind)" data-trait="منطق • تخطيط استراتيجي">
-              <img src="assets/avatars/mastermind.png" alt="The Mastermind" class="avatar-3d-img" />
+            <!-- 3. لجنة التنظيم -->
+            <div class="persona-card" data-img="assets/avatars/mastermind.png" data-name="لجنة التنظيم" data-trait="إدارة وتنسيق">
+              <img src="assets/avatars/mastermind.png" alt="لجنة التنظيم" class="avatar-3d-img" />
               <div class="persona-meta">
-                <span class="persona-name">المفكر</span>
-                <span class="persona-trait">تخطيط استراتيجي</span>
+                <span class="persona-name">لجنة التنظيم</span>
+                <span class="persona-trait">إدارة وتنسيق عام</span>
               </div>
             </div>
 
-            <!-- 4. The Creative -->
-            <div class="persona-card" data-img="assets/avatars/creative.png" data-name="المبدع (The Creative)" data-trait="فن • أفكار غير نمطية">
-              <img src="assets/avatars/creative.png" alt="The Creative" class="avatar-3d-img" />
+            <!-- 4. الزوّار -->
+            <div class="persona-card" data-img="assets/avatars/pioneer.png" data-name="الزوّار" data-trait="أعضاء وضيوف المنصة">
+              <img src="assets/avatars/pioneer.png" alt="الزوّار" class="avatar-3d-img" />
               <div class="persona-meta">
-                <span class="persona-name">المبدع</span>
-                <span class="persona-trait">أفكار خارج الصندوق</span>
-              </div>
-            </div>
-
-            <!-- 5. The Shadow -->
-            <div class="persona-card" data-img="assets/avatars/shadow.png" data-name="الغامض (The Shadow)" data-trait="سرّي • هادئ ونافذ">
-              <img src="assets/avatars/shadow.png" alt="The Shadow" class="avatar-3d-img" />
-              <div class="persona-meta">
-                <span class="persona-name">الغامض</span>
-                <span class="persona-trait">هادئ ونافذ التأثير</span>
-              </div>
-            </div>
-
-            <!-- 6. The Inspector -->
-            <div class="persona-card" data-img="assets/avatars/detective.png" data-name="المحقق (The Inspector)" data-trait="دقيق • ملاحظات عميقة">
-              <img src="assets/avatars/detective.png" alt="The Inspector" class="avatar-3d-img" />
-              <div class="persona-meta">
-                <span class="persona-name">المحقق</span>
-                <span class="persona-trait">فحص وملاحظات دقيقة</span>
+                <span class="persona-name">الزوّار</span>
+                <span class="persona-trait">أعضاء ومجتمع VG+</span>
               </div>
             </div>
           </div>
         </div>
 
-        <!-- 02 Topic Classification -->
+        <!-- 02 Classification -->
         <div class="step-block">
           <div class="step-header">
-            <span class="step-title">طبيعة الرسالة (Classification):</span>
-            <span class="step-index">02 // TOPIC</span>
+            <span class="step-title">نوع الرسالة:</span>
+            <span class="step-index">02 // التصنيف</span>
           </div>
 
           <div class="tag-grid" id="tagGrid">
-            <button type="button" class="tag-btn active" data-tag="PROP // مقترح تطوير">مقترح تطوير</button>
-            <button type="button" class="tag-btn" data-tag="STRAT // فكرة استراتيجية">فكرة استراتيجية</button>
-            <button type="button" class="tag-btn" data-tag="COLLAB // طلب تعاون">طلب تعاون</button>
-            <button type="button" class="tag-btn" data-tag="CONFIDENTIAL // رسالة خاصة">سرية خاصة</button>
-            <button type="button" class="tag-btn" data-tag="FEEDBACK // ملاحظة نقدية">ملاحظة نقدية</button>
+            <button type="button" class="tag-btn active" data-tag="مقترح وتطوير">💡 مقترح وتطوير</button>
+            <button type="button" class="tag-btn" data-tag="تقرير ومتابعة">📋 تقرير ومتابعة</button>
+            <button type="button" class="tag-btn" data-tag="طلب عاجل">⚡ طلب عاجل</button>
+            <button type="button" class="tag-btn" data-tag="تنسيق وتعاون">🤝 تنسيق وتعاون</button>
+            <button type="button" class="tag-btn" data-tag="ملاحظة خاصة">🔒 سرية خاصة</button>
           </div>
         </div>
 
         <!-- 03 Message Input -->
         <div class="step-block">
           <div class="step-header">
-            <span class="step-title">محتوى الإرسال (Dispatch Content):</span>
-            <span class="step-index">03 // MESSAGE</span>
+            <span class="step-title">نص الرسالة:</span>
+            <span class="step-index">03 // الرسالة</span>
           </div>
 
           <div class="input-wrapper">
             <textarea 
               id="messageInput" 
               maxlength="1200" 
-              placeholder="اكتب رسالتك هنا بكل دقة وشفافية... يتم استقبال وتحليل الإرسال مباشرة من قيادة VG+."
+              placeholder="اكتب رسالتك هنا بكل وضوح... يتم استلام وتحليل الإرسال مباشرة من قيادة VG+."
               required
             ></textarea>
             <div class="textarea-bottom">
-              <span>SECURITY: END-TO-END CONFIDENTIAL</span>
-              <span>CHARS: <span id="charCount">000</span> / 1200</span>
+              <span>تشفير كامل وسرية تامة</span>
+              <span>عدد الحروف: <span id="charCount">000</span> / 1200</span>
             </div>
           </div>
         </div>
 
-        <!-- Transmit Action -->
+        <!-- Transmit Action Button -->
         <button type="submit" id="submitBtn" class="btn-transmit">
           <span>[ إرسال الإفادة إلى VG+ ➔ ]</span>
         </button>
@@ -581,7 +562,7 @@
     <!-- Success View -->
     <div id="dispatchSuccessView" class="dispatch-success">
       <div class="success-badge">
-        <img id="successAvatarImg" src="assets/avatars/pioneer.png" alt="Persona" />
+        <img id="successAvatarImg" src="assets/avatars/cyber.png" alt="Persona" />
       </div>
       <div class="success-code">STATUS // 200 OK — DISPATCH TRANSMITTED</div>
       <h2 class="success-title">تم استلام إرسالك بنجاح</h2>
@@ -600,12 +581,47 @@
   </div>
 
   <script>
+    // Audio Synthesizer for Transmission Sound
+    const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+    let audioCtx = null;
+
+    function playTransmissionSound() {
+      try {
+        if (!audioCtx) audioCtx = new AudioContextClass();
+        if (audioCtx.state === 'suspended') audioCtx.resume();
+
+        const now = audioCtx.currentTime;
+
+        // Elegant modern transmission frequencies (arpeggio chord)
+        const notes = [523.25, 659.25, 783.99, 1046.50]; // C5, E5, G5, C6
+        notes.forEach((freq, idx) => {
+          const osc = audioCtx.createOscillator();
+          const gain = audioCtx.createGain();
+
+          osc.type = 'triangle';
+          osc.frequency.setValueAtTime(freq, now + (idx * 0.08));
+
+          gain.gain.setValueAtTime(0.001, now + (idx * 0.08));
+          gain.gain.exponentialRampToValueAtTime(0.12, now + (idx * 0.08) + 0.02);
+          gain.gain.exponentialRampToValueAtTime(0.001, now + (idx * 0.08) + 0.35);
+
+          osc.connect(gain);
+          gain.connect(audioCtx.destination);
+
+          osc.start(now + (idx * 0.08));
+          osc.stop(now + (idx * 0.08) + 0.36);
+        });
+      } catch (err) {
+        console.warn('Audio not allowed yet or unsupported:', err);
+      }
+    }
+
     let selectedPersona = {
-      image: 'assets/avatars/pioneer.png',
-      name: 'الرائد (The Pioneer)',
-      trait: 'طموح • رؤية استكشافية'
+      image: 'assets/avatars/cyber.png',
+      name: 'اللجنة التقنية',
+      trait: 'برمجة ودعم فني'
     };
-    let selectedTag = 'PROP // مقترح تطوير';
+    let selectedTag = 'مقترح وتطوير';
 
     // Persona Selection
     const personaCards = document.querySelectorAll('.persona-card');
@@ -671,6 +687,9 @@
 
         const data = await response.json();
         if (response.ok && data.success) {
+          // Play Transmission Sound!
+          playTransmissionSound();
+
           successAvatarImg.src = selectedPersona.image;
           formView.style.display = 'none';
           successView.style.display = 'block';
