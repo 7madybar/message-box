@@ -1,0 +1,17 @@
+# Dependencies
+node_modules/
+
+# Environment secrets
+.env
+
+# Logs
+*.log
+npm-debug.log*
+
+# System & OS files
+.DS_Store
+Thumbs.db
+
+# Messages data (لحماية خصوصية الرسائل من الرفع العام على GitHub)
+data/messages.json
+!data/.gitkeep

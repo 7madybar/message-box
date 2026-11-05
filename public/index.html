@@ -1,0 +1,739 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>VG+ | Visionary Growth - صندوق الرسائل التفاعلي</title>
+  
+  <!-- Google Fonts: Outfit & Cairo -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&family=Outfit:wght@500;700;800;900&display=swap" rel="stylesheet">
+  
+  <!-- Canvas Confetti for Celebration Effect -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.2/dist/confetti.browser.min.js"></script>
+
+  <style>
+    :root {
+      --bg-dark: #070d14;
+      --card-bg: rgba(13, 25, 38, 0.78);
+      --card-border: rgba(16, 185, 129, 0.18);
+      --card-border-glow: rgba(16, 185, 129, 0.45);
+      --primary-green: #10b981;
+      --primary-green-glow: #059669;
+      --navy-blue: #0f2438;
+      --navy-accent: #1e3a53;
+      --text-white: #f8fafc;
+      --text-muted: #94a3b8;
+      --text-dim: #64748b;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Cairo', system-ui, -apple-system, sans-serif;
+    }
+
+    body {
+      min-height: 100vh;
+      background-color: var(--bg-dark);
+      background-image: 
+        linear-gradient(rgba(16, 185, 129, 0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(16, 185, 129, 0.04) 1px, transparent 1px),
+        radial-gradient(ellipse at 50% 0%, rgba(16, 185, 129, 0.15) 0%, transparent 60%),
+        radial-gradient(ellipse at 80% 80%, rgba(15, 36, 56, 0.4) 0%, transparent 60%);
+      background-size: 32px 32px, 32px 32px, 100% 100%, 100% 100%;
+      color: var(--text-white);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 24px 16px;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    /* Ambient dynamic glow blobs */
+    .ambient-glow {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(120px);
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.35;
+      transition: transform 0.2s ease-out;
+    }
+    .glow-1 {
+      width: 420px;
+      height: 420px;
+      background: radial-gradient(circle, #10b981, transparent);
+      top: -100px;
+      right: 10%;
+    }
+    .glow-2 {
+      width: 380px;
+      height: 380px;
+      background: radial-gradient(circle, #0284c7, transparent);
+      bottom: -60px;
+      left: 10%;
+    }
+
+    /* Main Container */
+    .main-wrapper {
+      width: 100%;
+      max-width: 620px;
+      position: relative;
+      z-index: 2;
+    }
+
+    /* Card */
+    .card {
+      background: var(--card-bg);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid var(--card-border);
+      border-radius: 28px;
+      padding: 36px 30px;
+      box-shadow: 
+        0 20px 50px rgba(0, 0, 0, 0.6),
+        0 0 40px rgba(16, 185, 129, 0.08),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+      position: relative;
+      overflow: hidden;
+      transition: border-color 0.3s ease;
+    }
+
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, transparent, var(--primary-green), #38bdf8, transparent);
+    }
+
+    /* Brand Header */
+    .brand-header {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      margin-bottom: 28px;
+    }
+
+    .logo-container {
+      position: relative;
+      margin-bottom: 14px;
+    }
+
+    .logo-img {
+      width: 82px;
+      height: 82px;
+      border-radius: 22px;
+      object-fit: cover;
+      border: 2px solid rgba(16, 185, 129, 0.3);
+      box-shadow: 0 0 25px rgba(16, 185, 129, 0.25);
+      background: #0b1a28;
+      padding: 4px;
+      transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    .logo-img:hover {
+      transform: scale(1.08) rotate(2deg);
+      border-color: var(--primary-green);
+    }
+
+    .brand-title {
+      font-family: 'Outfit', 'Cairo', sans-serif;
+      font-size: 2.1rem;
+      font-weight: 900;
+      letter-spacing: 1px;
+      background: linear-gradient(135deg, #ffffff 30%, #a7f3d0 70%, #34d399 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      margin-bottom: 4px;
+    }
+
+    .brand-subtitle {
+      font-family: 'Outfit', sans-serif;
+      font-size: 0.82rem;
+      letter-spacing: 4px;
+      color: #34d399;
+      font-weight: 700;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+
+    .brand-desc {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      line-height: 1.6;
+      max-width: 440px;
+    }
+
+    /* Section Label */
+    .section-title {
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: #cbd5e1;
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .section-title span.hint {
+      font-size: 0.75rem;
+      color: var(--primary-green);
+      font-weight: 600;
+    }
+
+    /* Avatar Grid Selection */
+    .avatar-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+      margin-bottom: 22px;
+    }
+
+    .avatar-card {
+      background: rgba(15, 36, 56, 0.45);
+      border: 1.5px solid rgba(255, 255, 255, 0.08);
+      border-radius: 16px;
+      padding: 10px 6px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      cursor: pointer;
+      transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+      position: relative;
+    }
+
+    .avatar-card:hover {
+      background: rgba(16, 185, 129, 0.1);
+      border-color: rgba(16, 185, 129, 0.4);
+      transform: translateY(-3px);
+    }
+
+    .avatar-card.active {
+      background: rgba(16, 185, 129, 0.16);
+      border-color: var(--primary-green);
+      box-shadow: 0 0 16px rgba(16, 185, 129, 0.35);
+      transform: translateY(-2px);
+    }
+
+    .avatar-card.active::after {
+      content: '✓';
+      position: absolute;
+      top: -5px;
+      right: -5px;
+      width: 18px;
+      height: 18px;
+      background: var(--primary-green);
+      color: #070d14;
+      font-size: 11px;
+      font-weight: 900;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .avatar-emoji {
+      font-size: 1.8rem;
+      transition: transform 0.2s;
+    }
+
+    .avatar-card:hover .avatar-emoji {
+      transform: scale(1.15);
+    }
+
+    .avatar-name {
+      font-size: 0.76rem;
+      font-weight: 700;
+      color: #e2e8f0;
+      white-space: nowrap;
+    }
+
+    /* Tag Pills (نوع الرسالة) */
+    .tags-container {
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      padding-bottom: 6px;
+      margin-bottom: 20px;
+      scrollbar-width: none;
+    }
+    .tags-container::-webkit-scrollbar { display: none; }
+
+    .tag-pill {
+      flex-shrink: 0;
+      padding: 6px 14px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.09);
+      border-radius: 999px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .tag-pill:hover {
+      background: rgba(255, 255, 255, 0.08);
+      color: #fff;
+    }
+
+    .tag-pill.active {
+      background: rgba(16, 185, 129, 0.18);
+      border-color: var(--primary-green);
+      color: #34d399;
+    }
+
+    /* Textarea Box */
+    .input-box-wrapper {
+      position: relative;
+      margin-bottom: 20px;
+    }
+
+    textarea {
+      width: 100%;
+      height: 150px;
+      background: rgba(7, 13, 20, 0.7);
+      border: 1.5px solid rgba(255, 255, 255, 0.1);
+      border-radius: 18px;
+      padding: 16px 18px;
+      color: #fff;
+      font-size: 1rem;
+      line-height: 1.7;
+      resize: none;
+      outline: none;
+      transition: all 0.25s ease;
+    }
+
+    textarea:focus {
+      border-color: var(--primary-green);
+      background: rgba(7, 13, 20, 0.95);
+      box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.2);
+    }
+
+    textarea::placeholder {
+      color: #475569;
+    }
+
+    .input-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 6px;
+      font-size: 0.8rem;
+      color: var(--text-dim);
+    }
+
+    .char-counter {
+      font-weight: 600;
+      color: var(--text-muted);
+    }
+
+    /* Submit Button */
+    .btn-submit {
+      width: 100%;
+      padding: 16px;
+      background: linear-gradient(135deg, #10b981 0%, #059669 50%, #0f766e 100%);
+      color: #ffffff;
+      border: none;
+      border-radius: 16px;
+      font-size: 1.1rem;
+      font-weight: 800;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      box-shadow: 0 10px 25px -5px rgba(16, 185, 129, 0.45);
+      transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .btn-submit:hover:not(:disabled) {
+      transform: translateY(-2px);
+      box-shadow: 0 15px 30px -5px rgba(16, 185, 129, 0.65);
+      filter: brightness(1.08);
+    }
+
+    .btn-submit:active:not(:disabled) {
+      transform: translateY(0);
+    }
+
+    .btn-submit:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      filter: grayscale(0.5);
+    }
+
+    .spinner {
+      width: 22px;
+      height: 22px;
+      border: 3px solid rgba(255, 255, 255, 0.3);
+      border-top-color: #ffffff;
+      border-radius: 50%;
+      animation: spin 0.7s linear infinite;
+      display: none;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    .btn-submit.loading .spinner { display: block; }
+    .btn-submit.loading .btn-text { display: none; }
+
+    /* Success Card (Shown after sending) */
+    .success-overlay {
+      display: none;
+      text-align: center;
+      padding: 20px 0;
+      animation: zoomIn 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    @keyframes zoomIn {
+      from { opacity: 0; transform: scale(0.9); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    .success-icon {
+      width: 80px;
+      height: 80px;
+      background: rgba(16, 185, 129, 0.15);
+      border: 2px solid var(--primary-green);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 38px;
+      margin: 0 auto 18px;
+      box-shadow: 0 0 30px rgba(16, 185, 129, 0.35);
+    }
+
+    .success-title {
+      font-size: 1.5rem;
+      font-weight: 800;
+      margin-bottom: 8px;
+      color: #34d399;
+    }
+
+    .success-desc {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      line-height: 1.6;
+      margin-bottom: 24px;
+    }
+
+    .btn-again {
+      padding: 12px 28px;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 14px;
+      color: #fff;
+      font-size: 0.95rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .btn-again:hover {
+      background: rgba(16, 185, 129, 0.2);
+      border-color: var(--primary-green);
+    }
+
+    .status-alert {
+      margin-top: 14px;
+      padding: 12px;
+      border-radius: 12px;
+      font-size: 0.9rem;
+      display: none;
+      text-align: center;
+    }
+    .status-alert.error {
+      background: rgba(239, 68, 68, 0.15);
+      border: 1px solid rgba(239, 68, 68, 0.35);
+      color: #f87171;
+      display: block;
+    }
+
+    /* Footer */
+    footer {
+      text-align: center;
+      margin-top: 24px;
+      font-size: 0.8rem;
+      color: #475569;
+      letter-spacing: 0.5px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Ambient light blobs -->
+  <div class="ambient-glow glow-1" id="glow1"></div>
+  <div class="ambient-glow glow-2" id="glow2"></div>
+
+  <div class="main-wrapper">
+    <div class="card">
+
+      <!-- Active Form View -->
+      <div id="formView">
+        <!-- Brand Header -->
+        <div class="brand-header">
+          <div class="logo-container">
+            <img src="assets/logo.jpg" alt="VG+ Logo" class="logo-img" />
+          </div>
+          <h1 class="brand-title">VG<span style="color: var(--primary-green);">+</span></h1>
+          <div class="brand-subtitle">VISIONARY GROWTH</div>
+          <p class="brand-desc">
+            مساحتك الحرة والسرية لمشاركة أفكارك، اقتراحاتك، أو رسائلك الخاصة مع فريق <strong>VG+</strong>.
+          </p>
+        </div>
+
+        <form id="messageForm">
+          <!-- 1. Avatar Selector -->
+          <div class="section-title">
+            <span>👤 اختر شخصيتك / الأفاتار:</span>
+            <span class="hint" id="activeAvatarName">🚀 ريادي (Visionary)</span>
+          </div>
+
+          <div class="avatar-grid" id="avatarGrid">
+            <!-- Avatars injected dynamically -->
+          </div>
+
+          <!-- 2. Tag / Category Selector -->
+          <div class="section-title">
+            <span>🏷️ تصنيف الرسالة:</span>
+          </div>
+
+          <div class="tags-container" id="tagsContainer">
+            <div class="tag-pill active" data-tag="💡 فكرة واقتراح">💡 فكرة واقتراح</div>
+            <div class="tag-pill" data-tag="🚀 مشروع ريادي">🚀 مشروع ريادي</div>
+            <div class="tag-pill" data-tag="👏 شكر وتقدير">👏 شكر وتقدير</div>
+            <div class="tag-pill" data-tag="🔒 سرية خاصة">🔒 سرية خاصة</div>
+            <div class="tag-pill" data-tag="❓ استفسار">❓ استفسار</div>
+          </div>
+
+          <!-- 3. Message Input -->
+          <div class="section-title">
+            <span>✍️ رسالتك:</span>
+          </div>
+
+          <div class="input-box-wrapper">
+            <textarea 
+              id="messageInput" 
+              maxlength="1000" 
+              placeholder="اكتب رسالتك هنا... (رسالتك سرية ومجهولة وتصل مباشرة لفريق VG+)" 
+              required
+            ></textarea>
+            <div class="input-meta">
+              <span>🔒 تشفير كامل وسرية تامة</span>
+              <div class="char-counter"><span id="charCount">0</span> / 1000</div>
+            </div>
+          </div>
+
+          <!-- Submit Button -->
+          <button type="submit" id="submitBtn" class="btn-submit">
+            <span class="btn-text">إرسال الرسالة إلى VG+ 🚀</span>
+            <div class="spinner"></div>
+          </button>
+
+          <div id="statusAlert" class="status-alert"></div>
+        </form>
+      </div>
+
+      <!-- Success View (After Sending) -->
+      <div id="successView" class="success-overlay">
+        <div class="success-icon">✨</div>
+        <h2 class="success-title">وصلت رسالتك بنجاح!</h2>
+        <p class="success-desc">
+          شكرًا لمشاركتك القيّمة. رسالتك الآن في أيدٍ أمينة مع فريق <strong>VG+ | Visionary Growth</strong> وستُقرأ بعناية فائقة.
+        </p>
+        <button type="button" class="btn-again" onclick="resetForm()">
+          <span>✍️ إرسال رسالة أخرى</span>
+        </button>
+      </div>
+
+    </div>
+
+    <footer>
+      VG+ • Visionary Growth Platform • Confidential Messaging System
+    </footer>
+  </div>
+
+  <script>
+    // Avatars Data
+    const AVATARS = [
+      { id: 'visionary', emoji: '🚀', name: 'ريادي (Visionary)' },
+      { id: 'innovator', emoji: '⚡', name: 'مبتكر (Innovator)' },
+      { id: 'thinker', emoji: '💡', name: 'مفكر (Thinker)' },
+      { id: 'shadow', emoji: '🕶️', name: 'خفي (Shadow)' },
+      { id: 'leader', emoji: '👑', name: 'قائد (Leader)' },
+      { id: 'strategist', emoji: '🎯', name: 'استراتيجي (Strategist)' },
+      { id: 'creator', emoji: '💎', name: 'مبدع (Creator)' },
+      { id: 'cyber', emoji: '🤖', name: 'سايبر (Cyber)' }
+    ];
+
+    let selectedAvatar = AVATARS[0];
+    let selectedTag = '💡 فكرة واقتراح';
+
+    // Interactive Audio Synthesizer (Zero external dependencies)
+    const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    function playBeep(freq = 600, duration = 0.08, type = 'sine') {
+      try {
+        if (audioCtx.state === 'suspended') audioCtx.resume();
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.type = type;
+        osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+        gain.gain.setValueAtTime(0.08, audioCtx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + duration);
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        osc.start();
+        osc.stop(audioCtx.currentTime + duration);
+      } catch (e) {}
+    }
+
+    function playSuccessChime() {
+      try {
+        [523.25, 659.25, 783.99, 1046.50].forEach((freq, idx) => {
+          setTimeout(() => playBeep(freq, 0.25, 'triangle'), idx * 90);
+        });
+      } catch (e) {}
+    }
+
+    // Render Avatars Grid
+    const avatarGrid = document.getElementById('avatarGrid');
+    const activeAvatarName = document.getElementById('activeAvatarName');
+
+    AVATARS.forEach((av, index) => {
+      const card = document.createElement('div');
+      card.className = `avatar-card ${index === 0 ? 'active' : ''}`;
+      card.innerHTML = `
+        <span class="avatar-emoji">${av.emoji}</span>
+        <span class="avatar-name">${av.name.split(' ')[0]}</span>
+      `;
+      card.onclick = () => {
+        document.querySelectorAll('.avatar-card').forEach(c => c.classList.remove('active'));
+        card.classList.add('active');
+        selectedAvatar = av;
+        activeAvatarName.textContent = `${av.emoji} ${av.name}`;
+        playBeep(450 + (index * 50), 0.05);
+      };
+      avatarGrid.appendChild(card);
+    });
+
+    // Tag Selection
+    const tagPills = document.querySelectorAll('.tag-pill');
+    tagPills.forEach(pill => {
+      pill.onclick = () => {
+        tagPills.forEach(p => p.classList.remove('active'));
+        pill.classList.add('active');
+        selectedTag = pill.getAttribute('data-tag');
+        playBeep(520, 0.05);
+      };
+    });
+
+    // Character Counter
+    const messageInput = document.getElementById('messageInput');
+    const charCount = document.getElementById('charCount');
+    messageInput.addEventListener('input', () => {
+      charCount.textContent = messageInput.value.length;
+    });
+
+    // Form submission
+    const form = document.getElementById('messageForm');
+    const submitBtn = document.getElementById('submitBtn');
+    const formView = document.getElementById('formView');
+    const successView = document.getElementById('successView');
+    const statusAlert = document.getElementById('statusAlert');
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const message = messageInput.value.trim();
+      if (!message) {
+        showError('يرجى كتابة نص الرسالة أولاً!');
+        return;
+      }
+
+      submitBtn.classList.add('loading');
+      submitBtn.disabled = true;
+      statusAlert.style.display = 'none';
+
+      try {
+        const response = await fetch('/api/send', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            message,
+            avatar: selectedAvatar,
+            tag: selectedTag
+          })
+        });
+
+        const data = await response.json();
+
+        if (response.ok && data.success) {
+          // Play celebration chime
+          playSuccessChime();
+
+          // Confetti blast!
+          confetti({
+            particleCount: 80,
+            spread: 70,
+            origin: { y: 0.6 },
+            colors: ['#10b981', '#34d399', '#38bdf8', '#ffffff']
+          });
+
+          // Show success view
+          formView.style.display = 'none';
+          successView.style.display = 'block';
+        } else {
+          showError(data.error || 'حدث خطأ أثناء إرسال الرسالة.');
+        }
+      } catch (err) {
+        showError('تعذر الاتصال بالخادم. يرجى التأكد من تشغيل السيرفر.');
+      } finally {
+        submitBtn.classList.remove('loading');
+        submitBtn.disabled = false;
+      }
+    });
+
+    function showError(msg) {
+      statusAlert.textContent = msg;
+      statusAlert.className = 'status-alert error';
+    }
+
+    function resetForm() {
+      messageInput.value = '';
+      charCount.textContent = '0';
+      successView.style.display = 'none';
+      formView.style.display = 'block';
+    }
+
+    // Interactive ambient mouse movement
+    document.addEventListener('mousemove', (e) => {
+      const x = (e.clientX / window.innerWidth) - 0.5;
+      const y = (e.clientY / window.innerHeight) - 0.5;
+      const glow1 = document.getElementById('glow1');
+      const glow2 = document.getElementById('glow2');
+      if (glow1) glow1.style.transform = `translate(${x * 30}px, ${y * 30}px)`;
+      if (glow2) glow2.style.transform = `translate(${-x * 30}px, ${-y * 30}px)`;
+    });
+  </script>
+</body>
+</html>

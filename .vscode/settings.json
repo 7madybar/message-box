@@ -1,0 +1,5 @@
+{
+  "editor.fontSize": 14,
+  "files.autoSave": "afterDelay",
+  "terminal.integrated.defaultProfile.windows": "PowerShell"
+}

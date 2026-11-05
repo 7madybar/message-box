@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>VG+ | صندوق الوارد الخاص 🔒</title>
+  <!-- Google Fonts: Outfit & Cairo -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&family=Outfit:wght@500;700;800;900&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg-dark: #070d14;
+      --card-bg: rgba(13, 25, 38, 0.78);
+      --card-border: rgba(16, 185, 129, 0.18);
+      --primary-green: #10b981;
+      --navy-blue: #0f2438;
+      --text-white: #f8fafc;
+      --text-muted: #94a3b8;
+      --danger: #ef4444;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Cairo', system-ui, -apple-system, sans-serif;
+    }
+
+    body {
+      min-height: 100vh;
+      background-color: var(--bg-dark);
+      background-image: 
+        linear-gradient(rgba(16, 185, 129, 0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(16, 185, 129, 0.04) 1px, transparent 1px),
+        radial-gradient(ellipse at 50% 0%, rgba(16, 185, 129, 0.12) 0%, transparent 60%);
+      background-size: 32px 32px, 32px 32px, 100% 100%;
+      color: var(--text-white);
+      padding: 30px 16px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 800px;
+    }
+
+    /* Lock Card */
+    .lock-card {
+      max-width: 420px;
+      margin: 0 auto;
+      background: var(--card-bg);
+      backdrop-filter: blur(20px);
+      border: 1px solid var(--card-border);
+      border-radius: 28px;
+      padding: 36px 28px;
+      text-align: center;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.6);
+      position: relative;
+    }
+
+    .lock-logo {
+      width: 72px;
+      height: 72px;
+      border-radius: 18px;
+      border: 2px solid rgba(16, 185, 129, 0.35);
+      margin-bottom: 14px;
+      box-shadow: 0 0 20px rgba(16, 185, 129, 0.2);
+    }
+
+    .lock-title {
+      font-family: 'Outfit', 'Cairo', sans-serif;
+      font-size: 1.6rem;
+      font-weight: 800;
+      margin-bottom: 6px;
+      color: #fff;
+    }
+
+    .lock-desc {
+      color: var(--text-muted);
+      font-size: 0.92rem;
+      margin-bottom: 24px;
+      line-height: 1.5;
+    }
+
+    .pin-input {
+      width: 100%;
+      padding: 14px;
+      border-radius: 14px;
+      background: rgba(7, 13, 20, 0.7);
+      border: 1.5px solid rgba(255, 255, 255, 0.12);
+      color: #fff;
+      font-size: 1.3rem;
+      text-align: center;
+      letter-spacing: 6px;
+      outline: none;
+      margin-bottom: 16px;
+      transition: all 0.2s;
+    }
+
+    .pin-input:focus {
+      border-color: var(--primary-green);
+      box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.25);
+    }
+
+    .btn-login {
+      width: 100%;
+      padding: 13px;
+      background: linear-gradient(135deg, #10b981, #059669);
+      color: white;
+      border: none;
+      border-radius: 14px;
+      font-size: 1rem;
+      font-weight: 800;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .btn-login:hover {
+      filter: brightness(1.1);
+      transform: translateY(-1px);
+    }
+
+    .error-msg {
+      color: #f87171;
+      font-size: 0.85rem;
+      margin-top: 10px;
+      display: none;
+    }
+
+    /* Inbox Content */
+    #inboxSection {
+      display: none;
+      width: 100%;
+    }
+
+    .top-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 16px;
+      margin-bottom: 24px;
+      padding-bottom: 18px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .brand-meta {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .mini-logo {
+      width: 52px;
+      height: 52px;
+      border-radius: 14px;
+      border: 1.5px solid rgba(16, 185, 129, 0.4);
+    }
+
+    .header-text h1 {
+      font-family: 'Outfit', 'Cairo', sans-serif;
+      font-size: 1.5rem;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .count-badge {
+      display: inline-block;
+      padding: 2px 10px;
+      background: rgba(16, 185, 129, 0.15);
+      border: 1px solid rgba(16, 185, 129, 0.35);
+      color: #34d399;
+      border-radius: 999px;
+      font-size: 0.85rem;
+      font-weight: 700;
+    }
+
+    .actions-bar {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      padding: 8px 14px;
+      border-radius: 12px;
+      font-size: 0.88rem;
+      font-weight: 700;
+      cursor: pointer;
+      border: 1px solid transparent;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s ease;
+      text-decoration: none;
+    }
+
+    .btn-secondary {
+      background: rgba(255, 255, 255, 0.06);
+      border-color: rgba(255, 255, 255, 0.12);
+      color: #f1f5f9;
+    }
+    .btn-secondary:hover {
+      background: rgba(255, 255, 255, 0.12);
+      transform: translateY(-1px);
+    }
+
+    .btn-danger {
+      background: rgba(239, 68, 68, 0.12);
+      border-color: rgba(239, 68, 68, 0.3);
+      color: #f87171;
+    }
+    .btn-danger:hover {
+      background: rgba(239, 68, 68, 0.22);
+    }
+
+    /* Message Cards */
+    .messages-list {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .message-card {
+      background: var(--card-bg);
+      backdrop-filter: blur(16px);
+      border: 1px solid var(--card-border);
+      border-radius: 20px;
+      padding: 22px;
+      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.4);
+      position: relative;
+      animation: slideIn 0.3s ease;
+      transition: all 0.2s ease;
+    }
+
+    .message-card:hover {
+      border-color: rgba(16, 185, 129, 0.35);
+      transform: translateY(-2px);
+    }
+
+    @keyframes slideIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .card-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 14px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    .user-info {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .avatar-bubble {
+      width: 44px;
+      height: 44px;
+      border-radius: 14px;
+      background: rgba(16, 185, 129, 0.15);
+      border: 1px solid rgba(16, 185, 129, 0.3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+    }
+
+    .user-details {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .avatar-name-badge {
+      font-size: 0.95rem;
+      font-weight: 800;
+      color: #fff;
+    }
+
+    .tag-badge {
+      font-size: 0.75rem;
+      color: #38bdf8;
+      background: rgba(56, 189, 248, 0.12);
+      padding: 1px 8px;
+      border-radius: 6px;
+      align-self: flex-start;
+      font-weight: 600;
+    }
+
+    .card-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .time-stamp {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+    }
+
+    .btn-delete {
+      background: transparent;
+      border: none;
+      color: #64748b;
+      cursor: pointer;
+      padding: 6px 8px;
+      border-radius: 8px;
+      font-size: 0.85rem;
+      transition: all 0.2s;
+    }
+    .btn-delete:hover {
+      color: #ef4444;
+      background: rgba(239, 68, 68, 0.12);
+    }
+
+    .message-content {
+      font-size: 1.05rem;
+      line-height: 1.8;
+      color: #f1f5f9;
+      white-space: pre-wrap;
+      word-break: break-word;
+      padding: 4px 2px;
+    }
+
+    .empty-state {
+      text-align: center;
+      padding: 60px 20px;
+      background: var(--card-bg);
+      border: 1px dashed rgba(16, 185, 129, 0.2);
+      border-radius: 24px;
+    }
+
+    .empty-icon { font-size: 3.5rem; margin-bottom: 12px; }
+    .empty-title { font-size: 1.3rem; font-weight: 800; margin-bottom: 6px; }
+    .empty-desc { color: var(--text-muted); font-size: 0.95rem; }
+
+    .refresh-footer {
+      text-align: center;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      margin-top: 24px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+
+    <!-- 1. شاشة القفل بكلمة السر -->
+    <div id="lockScreen" class="lock-card">
+      <img src="assets/logo.jpg" alt="VG+ Logo" class="lock-logo" />
+      <h2 class="lock-title">VG+ | صندوق الوارد</h2>
+      <p class="lock-desc">منصة الرسائل السرية لفريق Visionary Growth. يرجى إدخال رمز الوصول.</p>
+      
+      <form id="loginForm" onsubmit="handleLogin(event)">
+        <input 
+          type="password" 
+          id="pinInput" 
+          class="pin-input" 
+          placeholder="••••" 
+          autofocus 
+          required 
+        />
+        <button type="submit" class="btn-login">فتح الصندوق 🔓</button>
+        <div id="loginError" class="error-msg">الرمز السري غير صحيح!</div>
+      </form>
+    </div>
+
+    <!-- 2. محتوى صندوق الوارد -->
+    <div id="inboxSection">
+      <div class="top-header">
+        <div class="brand-meta">
+          <img src="assets/logo.jpg" alt="VG+ Logo" class="mini-logo" />
+          <div class="header-text">
+            <h1>VG+ • الوارد <span id="countBadge" class="count-badge">0 رسائل</span></h1>
+          </div>
+        </div>
+
+        <div class="actions-bar">
+          <button class="btn btn-secondary" onclick="loadMessages()">
+            <span>🔄</span>
+            <span>تحديث</span>
+          </button>
+          <button class="btn btn-danger" onclick="clearAllMessages()">
+            <span>🗑️</span>
+            <span>مسح الكل</span>
+          </button>
+          <button class="btn btn-secondary" onclick="logout()" title="إعادة قفل الصندوق">
+            <span>🔒</span>
+            <span>قفل</span>
+          </button>
+        </div>
+      </div>
+
+      <div id="messagesList" class="messages-list"></div>
+
+      <div class="refresh-footer">
+        تحديث فوري وتلقائي كل 5 ثوانٍ • VG+ Visionary Growth
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    let activePin = sessionStorage.getItem('inbox_pin') || '';
+
+    const lockScreen = document.getElementById('lockScreen');
+    const inboxSection = document.getElementById('inboxSection');
+    const pinInput = document.getElementById('pinInput');
+    const loginError = document.getElementById('loginError');
+    const messagesList = document.getElementById('messagesList');
+    const countBadge = document.getElementById('countBadge');
+
+    if (activePin) {
+      verifyAndUnlock(activePin, false);
+    }
+
+    async function handleLogin(e) {
+      e.preventDefault();
+      const enteredPin = pinInput.value.trim();
+      await verifyAndUnlock(enteredPin, true);
+    }
+
+    async function verifyAndUnlock(pin, isManual) {
+      try {
+        const res = await fetch('/api/auth/verify', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ pin })
+        });
+
+        if (res.ok) {
+          activePin = pin;
+          sessionStorage.setItem('inbox_pin', pin);
+          lockScreen.style.display = 'none';
+          inboxSection.style.display = 'block';
+          loginError.style.display = 'none';
+          loadMessages();
+        } else {
+          if (isManual) {
+            loginError.style.display = 'block';
+            pinInput.value = '';
+          } else {
+            sessionStorage.removeItem('inbox_pin');
+          }
+        }
+      } catch (err) {
+        if (isManual) alert('تعذر الاتصال بالخادم.');
+      }
+    }
+
+    function logout() {
+      sessionStorage.removeItem('inbox_pin');
+      activePin = '';
+      inboxSection.style.display = 'none';
+      lockScreen.style.display = 'block';
+      pinInput.value = '';
+    }
+
+    async function loadMessages() {
+      if (!activePin) return;
+
+      try {
+        const res = await fetch('/api/messages', {
+          headers: { 'x-admin-pin': activePin }
+        });
+
+        if (res.status === 401) {
+          logout();
+          return;
+        }
+
+        const data = await res.json();
+        if (data.success) {
+          renderMessages(data.messages);
+        }
+      } catch (err) {
+        console.error('فشل في جلب الرسائل:', err);
+      }
+    }
+
+    function renderMessages(messages) {
+      countBadge.textContent = `${messages.length} ${messages.length === 1 ? 'رسالة' : 'رسائل'}`;
+
+      if (messages.length === 0) {
+        messagesList.innerHTML = `
+          <div class="empty-state">
+            <div class="empty-icon">📭</div>
+            <div class="empty-title">لا توجد رسائل واردة بعد</div>
+            <div class="empty-desc">أي رسالة يرسلها الزائر ستظهر هنا فورياً مع شخصيته وتصنيف رسالته!</div>
+          </div>
+        `;
+        return;
+      }
+
+      messagesList.innerHTML = messages.map(msg => {
+        const avatarEmoji = msg.avatar ? msg.avatar.emoji : '🚀';
+        const avatarName = msg.avatar ? msg.avatar.name : 'ريادي (Visionary)';
+        const tagText = msg.tag || '💡 فكرة واقتراح';
+
+        return `
+          <div class="message-card">
+            <div class="card-top">
+              <div class="user-info">
+                <div class="avatar-bubble">${avatarEmoji}</div>
+                <div class="user-details">
+                  <div class="avatar-name-badge">${escapeHtml(avatarName)}</div>
+                  <span class="tag-badge">${escapeHtml(tagText)}</span>
+                </div>
+              </div>
+
+              <div class="card-actions">
+                <span class="time-stamp">🕒 ${msg.formattedTime || 'الآن'}</span>
+                <button class="btn-delete" title="حذف الرسالة" onclick="deleteMessage('${msg.id}')">
+                  🗑️ حذف
+                </button>
+              </div>
+            </div>
+
+            <div class="message-content">${escapeHtml(msg.text)}</div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    async function deleteMessage(id) {
+      if (!confirm('هل أنت متأكد من حذف هذه الرسالة؟')) return;
+
+      try {
+        const res = await fetch(`/api/messages/${id}`, {
+          method: 'DELETE',
+          headers: { 'x-admin-pin': activePin }
+        });
+        const data = await res.json();
+        if (data.success) loadMessages();
+      } catch (err) {
+        alert('تعذر حذف الرسالة.');
+      }
+    }
+
+    async function clearAllMessages() {
+      if (!confirm('هل أنت متأكد من مسح جميع الرسائل؟ لا يمكن التراجع عن هذا الإجراء.')) return;
+
+      try {
+        const res = await fetch('/api/messages', {
+          method: 'DELETE',
+          headers: { 'x-admin-pin': activePin }
+        });
+        const data = await res.json();
+        if (data.success) loadMessages();
+      } catch (err) {
+        alert('تعذر مسح الرسائل.');
+      }
+    }
+
+    function escapeHtml(text) {
+      const div = document.createElement('div');
+      div.textContent = text;
+      return div.innerHTML;
+    }
+
+    setInterval(() => {
+      if (activePin) loadMessages();
+    }, 5000);
+  </script>
+</body>
+</html>
