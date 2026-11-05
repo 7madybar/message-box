@@ -7,7 +7,7 @@
   
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&family=Space+Grotesk:wght@500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 
   <style>
     :root {
@@ -194,18 +194,47 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding-bottom: 10px;
+      padding-bottom: 12px;
       margin-bottom: 12px;
       border-bottom: 1px dashed var(--border);
-      font-family: var(--font-mono);
-      font-size: 0.74rem;
       flex-wrap: wrap;
-      gap: 8px;
+      gap: 10px;
+    }
+
+    .dispatch-user-badge {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .dispatch-avatar-thumb {
+      width: 44px;
+      height: 44px;
+      object-fit: contain;
+      filter: drop-shadow(0 2px 6px rgba(0,0,0,0.4));
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border);
+      padding: 2px;
     }
 
     .dispatch-source {
-      color: var(--accent-green-bright);
+      color: #fff;
       font-weight: 700;
+      font-size: 0.92rem;
+    }
+
+    .dispatch-trait {
+      font-size: 0.72rem;
+      color: var(--accent-green-bright);
+      font-family: var(--font-mono);
+    }
+
+    .dispatch-meta-right {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-family: var(--font-mono);
+      font-size: 0.74rem;
     }
 
     .dispatch-time {
@@ -359,21 +388,32 @@
         return;
       }
 
-      dispatchesList.innerHTML = messages.map(msg => `
-        <div class="dispatch-item">
-          <div class="dispatch-meta">
-            <div>
-              <span class="dispatch-source">SOURCE: ${escapeHtml(msg.avatar ? msg.avatar.name : 'ANONYMOUS')}</span>
-              <span class="dispatch-tag">${escapeHtml(msg.tag || 'GENERAL')}</span>
+      dispatchesList.innerHTML = messages.map(msg => {
+        const avatarImg = (msg.avatar && msg.avatar.image) ? msg.avatar.image : 'assets/avatars/pioneer.png';
+        const avatarName = (msg.avatar && msg.avatar.name) ? msg.avatar.name : 'شخصية مجهولة';
+        const avatarTrait = (msg.avatar && msg.avatar.trait) ? msg.avatar.trait : 'IDENTITY SPECIFIED';
+
+        return `
+          <div class="dispatch-item">
+            <div class="dispatch-meta">
+              <div class="dispatch-user-badge">
+                <img src="${avatarImg}" alt="Avatar" class="dispatch-avatar-thumb" />
+                <div>
+                  <div class="dispatch-source">${escapeHtml(avatarName)}</div>
+                  <div class="dispatch-trait">${escapeHtml(avatarTrait)}</div>
+                </div>
+              </div>
+
+              <div class="dispatch-meta-right">
+                <span class="dispatch-tag">${escapeHtml(msg.tag || 'GENERAL')}</span>
+                <span class="dispatch-time">${msg.formattedTime || 'RECENT'}</span>
+                <button class="btn-del-msg" onclick="deleteDispatch('${msg.id}')">[ DELETE ]</button>
+              </div>
             </div>
-            <div>
-              <span class="dispatch-time">${msg.formattedTime || 'RECENT'}</span>
-              <button class="btn-del-msg" onclick="deleteDispatch('${msg.id}')">[ DELETE ]</button>
-            </div>
+            <div class="dispatch-text">${escapeHtml(msg.text)}</div>
           </div>
-          <div class="dispatch-text">${escapeHtml(msg.text)}</div>
-        </div>
-      `).join('');
+        `;
+      }).join('');
     }
 
     async function deleteDispatch(id) {
